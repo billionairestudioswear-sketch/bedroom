@@ -1,0 +1,59 @@
+/* Cart and checkout. Relies on WooCommerce's own cart/checkout
+   shortcode markup rendered on a regular WordPress page — only visual
+   styling here. */
+
+.woocommerce-cart table.shop_table,
+.woocommerce-checkout table.shop_table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: var(--mbf-gap-md);
+}
+
+.woocommerce-cart table.shop_table th,
+.woocommerce-cart table.shop_table td,
+.woocommerce-checkout table.shop_table th,
+.woocommerce-checkout table.shop_table td {
+	padding: 0.6rem;
+	border-bottom: 1px solid var(--mbf-border);
+	text-align: left;
+}
+
+.cart-collaterals .cart_totals {
+	background: var(--mbf-surface-alt);
+	padding: var(--mbf-gap-sm);
+	border-radius: var(--mbf-radius);
+}
+
+.wc-proceed-to-checkout .checkout-button,
+#place_order {
+	background: var(--mbf-turquoise);
+	color: #fff;
+	border: 0;
+	padding: 0.8rem 1.6rem;
+	border-radius: var(--mbf-radius);
+	font-weight: 600;
+	cursor: pointer;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.woocommerce-checkout .col2-set {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--mbf-gap-md);
+}
+
+.woocommerce-checkout .form-row input,
+.woocommerce-checkout .form-row select,
+.woocommerce-checkout .form-row textarea {
+	width: 100%;
+	padding: 0.6rem;
+	border: 1px solid var(--mbf-border);
+	border-radius: var(--mbf-radius);
+}
+
+@media (min-width: 1024px) {
+	.woocommerce-checkout .col2-set {
+		grid-template-columns: 1fr 1fr;
+	}
+}

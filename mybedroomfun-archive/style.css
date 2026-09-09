@@ -1,0 +1,125 @@
+/*
+Theme Name: MyBedroomFun Archive
+Author: MyBedroomFun
+Description: Original lightweight WooCommerce theme rebuilding the MyBedroomFun storefront layout. No page builder, no third-party framework. Dynamically renders the existing WooCommerce catalog.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+WC requires at least: 8.0
+WC tested up to: 9.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: mybedroomfun-archive
+*/
+
+/* ------------------------------------------------------------------
+   Design tokens. Loaded first (style.css is always enqueued); every
+   other stylesheet in assets/css/ reads these custom properties.
+   ------------------------------------------------------------------ */
+:root {
+	--mbf-turquoise: #17a3a3;
+	--mbf-turquoise-dark: #0f7f7f;
+	--mbf-dark: #1c1e21;
+	--mbf-dark-soft: #2a2d31;
+	--mbf-ink: #202124;
+	--mbf-muted: #6b7076;
+	--mbf-border: #e2e5e8;
+	--mbf-surface: #ffffff;
+	--mbf-surface-alt: #f6f7f8;
+	--mbf-accent: #d1477a;
+	--mbf-sale: #c0392b;
+	--mbf-success: #1e8e5a;
+
+	--mbf-font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mbf-font-heading: var(--mbf-font-base);
+
+	--mbf-radius: 6px;
+	--mbf-gap-xs: 0.5rem;
+	--mbf-gap-sm: 1rem;
+	--mbf-gap-md: 1.5rem;
+	--mbf-gap-lg: 2.5rem;
+	--mbf-container: 1280px;
+
+	--mbf-header-h: 72px;
+}
+
+/* ------------------------------------------------------------------
+   Minimal global reset. Section-specific rules live in assets/css/
+   and are enqueued only where they are needed (see inc/enqueue.php).
+   ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: var(--mbf-font-base);
+	color: var(--mbf-ink);
+	background: var(--mbf-surface);
+	line-height: 1.5;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+a {
+	color: inherit;
+}
+
+.mbf-container {
+	max-width: var(--mbf-container);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--mbf-gap-sm);
+	padding-right: var(--mbf-gap-sm);
+}
+
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background: var(--mbf-surface);
+	color: var(--mbf-ink);
+	clip: auto !important;
+	clip-path: none;
+	height: auto;
+	width: auto;
+	display: block;
+	padding: 0.75rem 1rem;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100000;
+}
+
+.mbf-skip-link {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 100000;
+	background: var(--mbf-dark);
+	color: #fff;
+	padding: 0.75rem 1rem;
+}
+
+.mbf-skip-link:focus {
+	left: 0;
+}

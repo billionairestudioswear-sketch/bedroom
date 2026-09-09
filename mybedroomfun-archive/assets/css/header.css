@@ -1,0 +1,128 @@
+/* Announcement bar, utility links, search-centered header, shipping message. */
+
+.mbf-announcement {
+	background: var(--mbf-turquoise);
+	color: #fff;
+}
+
+.mbf-announcement p {
+	margin: 0;
+	padding: 0.4rem 0;
+	font-size: 0.8rem;
+	text-align: center;
+	letter-spacing: 0.02em;
+}
+
+.mbf-utility {
+	display: flex;
+	justify-content: flex-end;
+	padding: 0.4rem 0;
+	border-bottom: 1px solid var(--mbf-border);
+}
+
+.mbf-utility__menu {
+	list-style: none;
+	display: flex;
+	gap: var(--mbf-gap-sm);
+	margin: 0;
+	padding: 0;
+	font-size: 0.8rem;
+}
+
+.mbf-utility__menu a {
+	text-decoration: none;
+	color: var(--mbf-muted);
+}
+
+.mbf-header__main {
+	display: flex;
+	align-items: center;
+	gap: var(--mbf-gap-sm);
+	flex-wrap: wrap;
+	padding: var(--mbf-gap-sm) 0;
+}
+
+.mbf-header__brand {
+	flex: 0 0 auto;
+}
+
+.mbf-header__site-name {
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.mbf-header__search {
+	flex: 1 1 320px;
+	order: 3;
+}
+
+.mbf-header__search form,
+.mbf-header__search .woocommerce-product-search {
+	display: flex;
+	width: 100%;
+}
+
+.mbf-header__search input[type="search"] {
+	flex: 1;
+	padding: 0.6rem 0.8rem;
+	border: 1px solid var(--mbf-border);
+	border-radius: var(--mbf-radius) 0 0 var(--mbf-radius);
+	font-size: 0.95rem;
+}
+
+.mbf-header__search button {
+	padding: 0 1rem;
+	border: 1px solid var(--mbf-dark);
+	background: var(--mbf-dark);
+	color: #fff;
+	border-radius: 0 var(--mbf-radius) var(--mbf-radius) 0;
+	cursor: pointer;
+}
+
+.mbf-header__controls {
+	display: flex;
+	gap: var(--mbf-gap-sm);
+	margin-left: auto;
+}
+
+.mbf-header__control {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 0.75rem;
+	text-decoration: none;
+	color: var(--mbf-ink);
+	position: relative;
+}
+
+.mbf-header__control .count {
+	background: var(--mbf-accent);
+	color: #fff;
+	border-radius: 999px;
+	font-size: 0.65rem;
+	padding: 0 0.35rem;
+	min-width: 1.1rem;
+	text-align: center;
+	position: absolute;
+	top: -0.4rem;
+	right: -0.6rem;
+}
+
+.mbf-shipping-message {
+	text-align: center;
+	font-size: 0.85rem;
+	color: var(--mbf-muted);
+	margin: 0 auto var(--mbf-gap-sm);
+}
+
+@media (min-width: 768px) {
+	.mbf-header__main {
+		flex-wrap: nowrap;
+	}
+
+	.mbf-header__search {
+		order: initial;
+		max-width: 520px;
+	}
+}

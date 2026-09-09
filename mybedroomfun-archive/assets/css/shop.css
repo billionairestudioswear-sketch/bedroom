@@ -1,0 +1,142 @@
+/* Shop / category archive layout, product loop grid, and shop sidebar.
+   Also used on search results (reuses .mbf-rail__grid card markup). */
+
+.mbf-shop-layout {
+	display: flex;
+	flex-direction: column;
+	gap: var(--mbf-gap-lg);
+	padding-top: var(--mbf-gap-lg);
+	padding-bottom: var(--mbf-gap-lg);
+}
+
+.mbf-main--shop {
+	flex: 1;
+	min-width: 0;
+}
+
+.mbf-shop-sidebar {
+	flex: 0 0 240px;
+}
+
+.mbf-shop-sidebar__categories ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.mbf-shop-sidebar__categories a {
+	display: block;
+	padding: 0.3rem 0;
+	text-decoration: none;
+	color: var(--mbf-ink);
+	font-size: 0.9rem;
+}
+
+.mbf-shop-sidebar__categories ul ul {
+	padding-left: 0.75rem;
+}
+
+.mbf-shop-sidebar__categories ul ul a {
+	color: var(--mbf-muted);
+	font-size: 0.85rem;
+}
+
+.mbf-breadcrumb {
+	font-size: 0.8rem;
+	color: var(--mbf-muted);
+	padding: var(--mbf-gap-xs) 0;
+}
+
+.mbf-breadcrumb a {
+	color: var(--mbf-muted);
+}
+
+/* WooCommerce's own loop markup: ul.products > li.product.mbf-product-card */
+ul.products {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--mbf-gap-sm);
+}
+
+ul.products li.product {
+	position: relative;
+}
+
+ul.products li.product a img {
+	border-radius: var(--mbf-radius);
+	background: var(--mbf-surface-alt);
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+	display: block;
+	font-size: 0.9rem;
+	font-weight: 600;
+	margin: 0.4rem 0 0.2rem;
+}
+
+ul.products li.product .price {
+	font-size: 0.9rem;
+	color: var(--mbf-muted);
+}
+
+ul.products li.product .onsale {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	background: var(--mbf-sale);
+	color: #fff;
+	font-size: 0.7rem;
+	padding: 0.2rem 0.5rem;
+	border-radius: 999px;
+	z-index: 1;
+}
+
+ul.products li.product .star-rating {
+	font-size: 0.8rem;
+	color: var(--mbf-turquoise-dark);
+}
+
+ul.products li.product .button {
+	display: inline-block;
+	margin-top: 0.4rem;
+	padding: 0.5rem 0.9rem;
+	font-size: 0.8rem;
+	border-radius: var(--mbf-radius);
+	background: var(--mbf-dark);
+	color: #fff;
+	text-decoration: none;
+}
+
+.woocommerce-pagination {
+	margin-top: var(--mbf-gap-md);
+}
+
+.woocommerce-pagination ul {
+	list-style: none;
+	display: flex;
+	gap: 0.4rem;
+	padding: 0;
+}
+
+.mbf-search-results {
+	margin-top: var(--mbf-gap-sm);
+}
+
+@media (min-width: 768px) {
+	.mbf-shop-layout {
+		flex-direction: row;
+	}
+
+	ul.products {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	ul.products {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

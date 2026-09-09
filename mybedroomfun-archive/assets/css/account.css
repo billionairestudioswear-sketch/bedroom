@@ -1,0 +1,49 @@
+/* My Account. Relies on WooCommerce's own account shortcode markup
+   rendered on a regular WordPress page — only visual styling here. */
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation a {
+	display: block;
+	padding: 0.5rem 0.75rem;
+	border-radius: var(--mbf-radius);
+	text-decoration: none;
+	color: var(--mbf-ink);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation .is-active a {
+	background: var(--mbf-turquoise);
+	color: #fff;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+	margin-top: var(--mbf-gap-sm);
+}
+
+.woocommerce-account form .form-row input {
+	width: 100%;
+	padding: 0.6rem;
+	border: 1px solid var(--mbf-border);
+	border-radius: var(--mbf-radius);
+}
+
+.woocommerce-account fieldset {
+	border: 1px solid var(--mbf-border);
+	border-radius: var(--mbf-radius);
+	padding: var(--mbf-gap-sm);
+}
+
+@media (min-width: 768px) {
+	.woocommerce-account .u-columns {
+		display: grid;
+		grid-template-columns: 220px 1fr;
+		gap: var(--mbf-gap-md);
+	}
+}

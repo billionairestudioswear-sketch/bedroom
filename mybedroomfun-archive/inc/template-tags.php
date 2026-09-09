@@ -1,0 +1,260 @@
+<?php
+/**
+ * Dynamic WooCommerce data helpers used by the homepage and header.
+ *
+ * Every query here is deliberately small (limited posts_per_page) and
+ * cached in a transient — the homepage must never load the full
+ * catalog. Nothing here creates, copies, or modifies products,
+ * categories, or terms; it only reads what already exists in
+ * WooCommerce.
+ *
+ * @package MyBedroomFun_Archive
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Get a small set of product IDs for a homepage section, cached.
+ *
+ * @param string $cache_key  Transient key suffix.
+ * @param array  $query_args wc_get_products() args.
+ * @param int    $ttl        Cache lifetime in seconds.
+ * @return int[] Product IDs.
+ */
+function mbf_get_cached_product_ids( $cache_key, array $query_args, $ttl = HOUR_IN_SECONDS * 6 ) {
+	if ( ! function_exists( 'wc_get_products' ) ) {
+		return array();
+	}
+
+	$transient_key = 'mbf_' . $cache_key;
+	$cached        = get_transient( $transient_key );
+
+	if ( false !== $cached ) {
+		return $cached;
+	}
+
+	$default_args = array(
+		'status' => 'publish',
+		'limit'  => 8,
+		'return' => 'ids',
+	);
+
+	$ids = wc_get_products( array_merge( $default_args, $query_args ) );
+	$ids = is_array( $ids ) ? $ids : array();
+
+	set_transient( $transient_key, $ids, $ttl );
+
+	return $ids;
+}
+
+/**
+ * Bestsellers, ordered by WooCommerce's own sales meta.
+ *
+ * @param int $limit Number of products.
+ * @return int[]
+ */
+function mbf_get_bestseller_ids( $limit = 8 ) {
+	return mbf_get_cached_product_ids(
+		'bestsellers_' . $limit,
+		array(
+			'limit'   => $limit,
+			'orderby' => 'popularity',
+			'order'   => 'DESC',
+		)
+	);
+}
+
+/**
+ * Products currently on sale.
+ *
+ * @param int $limit Number of products.
+ * @return int[]
+ */
+function mbf_get_sale_ids( $limit = 8 ) {
+	if ( ! function_exists( 'wc_get_product_ids_on_sale' ) ) {
+		return array();
+	}
+
+	$transient_key = 'mbf_sale_' . $limit;
+	$cached        = get_transient( $transient_key );
+
+	if ( false !== $cached ) {
+		return $cached;
+	}
+
+	$sale_ids = wc_get_product_ids_on_sale();
+	$sale_ids = is_array( $sale_ids ) ? array_slice( array_reverse( $sale_ids ), 0, $limit ) : array();
+
+	set_transient( $transient_key, $sale_ids, HOUR_IN_SECONDS * 3 );
+
+	return $sale_ids;
+}
+
+/**
+ * Products marked as WooCommerce "Featured".
+ *
+ * @param int $limit Number of products.
+ * @return int[]
+ */
+function mbf_get_featured_ids( $limit = 8 ) {
+	return mbf_get_cached_product_ids(
+		'featured_' . $limit,
+		array(
+			'limit'    => $limit,
+			'featured' => true,
+			'orderby'  => 'date',
+			'order'    => 'DESC',
+		)
+	);
+}
+
+/**
+ * Newest published products.
+ *
+ * @param int $limit Number of products.
+ * @return int[]
+ */
+function mbf_get_new_arrival_ids( $limit = 8 ) {
+	return mbf_get_cached_product_ids(
+		'new_arrivals_' . $limit,
+		array(
+			'limit'   => $limit,
+			'orderby' => 'date',
+			'order'   => 'DESC',
+		)
+	);
+}
+
+/**
+ * Top-level product categories plus their direct children, for the
+ * mega menu and the "Browse Our Categories" homepage grid. Reads
+ * existing product_cat terms only.
+ *
+ * @param int $top_level_limit Max top-level categories to return (0 = all).
+ * @return array<int, array{term: WP_Term, children: WP_Term[]}>
+ */
+function mbf_get_shopping_categories( $top_level_limit = 0 ) {
+	$transient_key = 'mbf_shopping_categories_' . $top_level_limit;
+	$cached        = get_transient( $transient_key );
+
+	if ( false !== $cached ) {
+		return $cached;
+	}
+
+	$args = array(
+		'taxonomy'   => 'product_cat',
+		'parent'     => 0,
+		'hide_empty' => true,
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+	);
+
+	if ( $top_level_limit > 0 ) {
+		$args['number'] = $top_level_limit;
+	}
+
+	$top_level = get_terms( $args );
+	$data      = array();
+
+	if ( ! is_wp_error( $top_level ) && ! empty( $top_level ) ) {
+		foreach ( $top_level as $term ) {
+			$children = get_terms( array(
+				'taxonomy'   => 'product_cat',
+				'parent'     => $term->term_id,
+				'hide_empty' => true,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+				'number'     => 12,
+			) );
+
+			$data[] = array(
+				'term'     => $term,
+				'children' => is_wp_error( $children ) ? array() : $children,
+			);
+		}
+	}
+
+	set_transient( $transient_key, $data, HOUR_IN_SECONDS * 12 );
+
+	return $data;
+}
+
+/**
+ * Invalidate the cached homepage/menu data whenever a product or a
+ * product category changes, so the theme never shows stale data.
+ */
+function mbf_flush_dynamic_caches() {
+	global $wpdb;
+
+	$like = $wpdb->esc_like( '_transient_mbf_' ) . '%';
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $like ) );
+
+	$like_timeout = $wpdb->esc_like( '_transient_timeout_mbf_' ) . '%';
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $like_timeout ) );
+}
+add_action( 'save_post_product', 'mbf_flush_dynamic_caches' );
+add_action( 'woocommerce_update_product', 'mbf_flush_dynamic_caches' );
+add_action( 'created_product_cat', 'mbf_flush_dynamic_caches' );
+add_action( 'edited_product_cat', 'mbf_flush_dynamic_caches' );
+add_action( 'delete_product_cat', 'mbf_flush_dynamic_caches' );
+
+/**
+ * Render a single product card. Shared by every homepage rail and the
+ * WooCommerce loop override in woocommerce/content-product.php.
+ *
+ * @param int $product_id Product post ID.
+ */
+function mbf_render_product_card( $product_id ) {
+	$product = wc_get_product( $product_id );
+
+	if ( ! $product ) {
+		return;
+	}
+	?>
+	<li class="mbf-product-card">
+		<a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="mbf-product-card__link">
+			<span class="mbf-product-card__image">
+				<?php
+				echo wp_kses_post(
+					$product->get_image( 'mbf-card', array( 'loading' => 'lazy' ) )
+				);
+				?>
+				<?php if ( $product->is_on_sale() ) : ?>
+					<span class="mbf-badge mbf-badge--sale"><?php esc_html_e( 'Sale', 'mybedroomfun-archive' ); ?></span>
+				<?php endif; ?>
+			</span>
+			<span class="mbf-product-card__title"><?php echo esc_html( $product->get_name() ); ?></span>
+			<span class="mbf-product-card__price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span>
+		</a>
+	</li>
+	<?php
+}
+
+/**
+ * Output a homepage product rail (a heading plus a row of cards) for a
+ * list of product IDs. No-ops quietly if there is nothing to show yet.
+ *
+ * @param string $heading     Section heading text.
+ * @param int[]  $product_ids Product IDs to render.
+ */
+function mbf_render_product_rail( $heading, array $product_ids ) {
+	if ( empty( $product_ids ) ) {
+		return;
+	}
+	?>
+	<section class="mbf-rail">
+		<div class="mbf-container">
+			<h2 class="mbf-rail__heading"><?php echo esc_html( $heading ); ?></h2>
+			<ul class="mbf-rail__grid">
+				<?php foreach ( $product_ids as $product_id ) : ?>
+					<?php mbf_render_product_card( $product_id ); ?>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</section>
+	<?php
+}

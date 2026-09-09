@@ -1,0 +1,53 @@
+/* Multi-column footer. */
+
+.mbf-footer {
+	background: var(--mbf-dark);
+	color: #d8dade;
+	margin-top: var(--mbf-gap-lg);
+}
+
+.mbf-footer__columns {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--mbf-gap-md);
+	padding: var(--mbf-gap-lg) var(--mbf-gap-sm);
+}
+
+.mbf-footer__heading {
+	color: #fff;
+	font-size: 1rem;
+	margin: 0 0 var(--mbf-gap-xs);
+}
+
+.mbf-footer__about {
+	font-size: 0.85rem;
+	max-width: 32ch;
+}
+
+.mbf-footer__menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.mbf-footer__menu a {
+	color: #d8dade;
+	text-decoration: none;
+	font-size: 0.85rem;
+}
+
+.mbf-footer__bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding: var(--mbf-gap-sm);
+	font-size: 0.75rem;
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	.mbf-footer__columns {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

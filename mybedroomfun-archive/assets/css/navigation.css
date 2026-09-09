@@ -1,0 +1,113 @@
+/* Dark navigation bar + Shopping Categories mega menu. */
+
+.mbf-nav {
+	background: var(--mbf-dark);
+	color: #fff;
+}
+
+.mbf-nav__inner {
+	display: flex;
+	align-items: center;
+	gap: var(--mbf-gap-md);
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.mbf-nav__menu {
+	list-style: none;
+	display: flex;
+	gap: var(--mbf-gap-md);
+	margin: 0;
+	padding: 0.6rem 0;
+	flex-wrap: wrap;
+}
+
+.mbf-nav__menu a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 0.9rem;
+}
+
+.mbf-mega {
+	position: relative;
+}
+
+.mbf-mega__trigger {
+	background: var(--mbf-dark-soft);
+	color: #fff;
+	border: 0;
+	padding: 0.6rem 1rem;
+	font-size: 0.9rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.mbf-mega__trigger::after {
+	content: "";
+	width: 0;
+	height: 0;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 5px solid currentColor;
+}
+
+.mbf-mega__panel {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: var(--mbf-surface);
+	color: var(--mbf-ink);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+	padding: var(--mbf-gap-md);
+	z-index: 40;
+	min-width: 280px;
+	max-width: calc(100vw - 2rem);
+}
+
+.mbf-mega__panel[hidden] {
+	display: none;
+}
+
+.mbf-mega__columns {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	gap: var(--mbf-gap-md);
+	max-height: 60vh;
+	overflow-y: auto;
+}
+
+.mbf-mega__parent {
+	font-weight: 600;
+	text-decoration: none;
+	color: var(--mbf-ink);
+	display: block;
+	margin-bottom: 0.4rem;
+}
+
+.mbf-mega__children {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.mbf-mega__children a {
+	text-decoration: none;
+	color: var(--mbf-muted);
+	font-size: 0.85rem;
+}
+
+@media (max-width: 767px) {
+	.mbf-mega__panel {
+		position: static;
+		box-shadow: none;
+		border-top: 1px solid var(--mbf-border);
+	}
+}

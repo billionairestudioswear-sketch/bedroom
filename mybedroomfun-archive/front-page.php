@@ -98,46 +98,23 @@ get_header();
 
 	<?php
 	/**
-	 * The archive's 2 promotional banners linked to specific Nov 2023
-	 * categories (e.g. "Best Selling Lubes"). Those exact categories
-	 * are not recreated (old taxonomy, per the build brief) -- a
-	 * manually curated banner (set via Customizer theme mods) wins if
-	 * present; otherwise this falls back to the current catalog's own
-	 * top categories by product count, so the section always points at
-	 * something that actually exists right now.
+	 * The archive had 3 promotional banners linking to specific Nov
+	 * 2023 categories ("Best Selling Lubes" etc). Those exact
+	 * categories are not recreated (old taxonomy, per the build brief).
+	 * Matching the archive's banner *layout* doesn't require matching
+	 * its taxonomy: each of these 3 slots is picked explicitly by the
+	 * admin from the site's own existing product categories via
+	 * Appearance > Customize > Promotional Banners -- see
+	 * inc/customizer.php. No automatic selection; an unconfigured slot
+	 * is simply omitted.
 	 */
-	$mbf_banners  = array();
-	$mbf_fallback = null;
-
-	for ( $mbf_i = 1; $mbf_i <= 2; $mbf_i++ ) {
-		$mbf_title = get_theme_mod( "mbf_banner_{$mbf_i}_title" );
-
-		if ( $mbf_title ) {
-			$mbf_banners[] = array(
-				'title' => $mbf_title,
-				'url'   => get_theme_mod( "mbf_banner_{$mbf_i}_url", '#' ),
-				'image' => get_theme_mod( "mbf_banner_{$mbf_i}_image" ),
-			);
-		}
-	}
-
-	if ( count( $mbf_banners ) < 2 && function_exists( 'mbf_get_top_categories_by_count' ) ) {
-		$mbf_fallback = mbf_get_top_categories_by_count( 2 - count( $mbf_banners ) );
-		foreach ( $mbf_fallback as $mbf_term ) {
-			$mbf_thumb_id   = get_term_meta( $mbf_term->term_id, 'thumbnail_id', true );
-			$mbf_banners[]  = array(
-				'title' => $mbf_term->name,
-				'url'   => get_term_link( $mbf_term ),
-				'image' => $mbf_thumb_id ? wp_get_attachment_image_url( $mbf_thumb_id, 'mbf-banner' ) : '',
-			);
-		}
-	}
+	$mbf_banners = function_exists( 'mbf_get_promo_banners' ) ? mbf_get_promo_banners() : array();
 	?>
 	<?php if ( ! empty( $mbf_banners ) ) : ?>
 		<section class="mbf-banners">
 			<div class="mbf-container mbf-banners__grid">
 				<?php foreach ( $mbf_banners as $mbf_banner ) : ?>
-					<a class="mbf-banners__item" href="<?php echo esc_url( is_string( $mbf_banner['url'] ) ? $mbf_banner['url'] : '#' ); ?>">
+					<a class="mbf-banners__item" href="<?php echo esc_url( $mbf_banner['url'] ); ?>">
 						<?php if ( ! empty( $mbf_banner['image'] ) ) : ?>
 							<img src="<?php echo esc_url( $mbf_banner['image'] ); ?>" alt="" loading="lazy" />
 						<?php endif; ?>

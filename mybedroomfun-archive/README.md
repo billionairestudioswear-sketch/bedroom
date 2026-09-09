@@ -74,9 +74,9 @@ controls, dark nav + "Shopping Categories" mega menu) is in
 | Section headings, mega-menu label, primary nav ("Home"/"Shop") | **Recovered** — exact text from the saved HTML |
 | Logo, 1 hero image, 4 benefit-strip icons | **Recovered files** — see `ASSET-INVENTORY.md` |
 | Announcement bar / shipping-message / benefits-strip *wording with numbers* ("$60+", "14 days", "24/7") | **Recovered but not used as defaults** — this is 2023 policy data that can't be verified as still current (see "Use current verified policies" in the build brief). The literal recovered strings are: announcement — *"100% Discreet & Private Adult Sex Toy Shipping"*; shipping strip — *"FREE Shipping Over $60+ • Discreet Shipping & Billing"*; benefits — *"Free delivery for $60+", "Free returns within 14 days", "We are available 24/7", "100% Secure payments"*; footer about — *"MyBedroomFun is your number one all-inclusive sex toy retailer..."*. If the client confirms any of these are still accurate, paste them into the matching Customizer field (table below) — the theme ships with neutral placeholders instead. |
-| Promotional category banners | **Not recreated as named** — the archive linked to 3 specific Nov 2023 categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled Butt Plugs"). Recreating those by name would mean recreating old taxonomy, which the brief explicitly prohibits. This build auto-populates 2 banners from the *current* catalog's top categories by product count instead (`mbf_get_top_categories_by_count()`), and a manually set Customizer banner always wins over the auto one. |
+| Promotional category banners | **Not recreated as named** — the archive linked to 3 specific Nov 2023 categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled Butt Plugs"). Recreating those by name would mean recreating old taxonomy, which the brief explicitly prohibits. The layout is matched (3 banner slots); the destinations are picked by the admin from the site's *current* categories via Customizer (`inc/customizer.php`) — no automatic selection of any kind, and no free-text URL field, so a banner can never point anywhere but a real existing category. |
 | Container max-width `1200px` | **Not confirmed from this snapshot** — Flatsome's documented default, used because the site's actual computed value lives in a dynamic stylesheet the page save didn't capture. |
-| Flatsome's icon font (account/wishlist/cart/mega-menu icons) | **Deliberately not reused** — proprietary to the paid Flatsome theme, excluded by the brief. Text labels substitute. |
+| Flatsome's icon font (account/wishlist/cart/mega-menu icons) | **Deliberately not reused** — proprietary to the paid Flatsome theme, excluded by the brief. Original hand-drawn inline SVG line icons substitute (see `mbf_icon_svg()` in `inc/template-tags.php`), with visually-hidden text labels for accessibility. |
 
 ## Dynamic data — how it stays cheap
 
@@ -142,20 +142,26 @@ without theme changes.
   font or SVG sprite library. The 4 benefits-strip icons are small
   (~1-2.6KB each) recovered PNGs, `loading="lazy"`, not an icon font.
 
-## Customizer theme mods
+## Customizer
+
+**Promotional Banners** (`Appearance → Customize → Promotional
+Banners`) has a real, registered UI — see `inc/customizer.php`: 3
+slots, each a dropdown of the site's existing product categories
+("— None —" hides that slot; there's no free-text URL field) plus an
+image upload. An unset slot is simply not shown; nothing is
+auto-selected.
+
+A few other pieces of copy are theme mods with a safe fallback default
+but **no registered Customizer control yet** (set them with
+`get_theme_mod()`/`set_theme_mod()`, the Customizer JS API, or a small
+mu-plugin if you want a UI for them):
 
 | Mod | Purpose |
 |---|---|
 | `mbf_announcement_text` | Announcement bar copy |
 | `mbf_shipping_message` | Shipping strip copy under the header |
-| `mbf_hero_headline` / `mbf_hero_subhead` / `mbf_hero_image` | Homepage hero |
-| `mbf_banner_1_title` / `_url` / `_image`, `mbf_banner_2_*` | Promotional category banners |
-| `mbf_footer_about` | Footer "about" blurb |
-
-Set via `Appearance → Customize → Additional CSS` panel isn't required
-— use `get_theme_mod()`/Customizer API or a small mu-plugin to register
-controls for these mods; the theme reads them with safe fallback
-copy, so it works out of the box before anyone configures them.
+| `mbf_hero_image` | Homepage hero image (image-only hero, no headline/subhead) |
+| `mbf_footer_about` | Footer "About the Store" blurb |
 
 ## Menus to assign after activation
 

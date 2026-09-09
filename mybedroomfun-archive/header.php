@@ -79,15 +79,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="mbf-header__controls">
-			<a class="mbf-header__control" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : admin_url() ); ?>">
-				<span class="mbf-header__control-label"><?php esc_html_e( 'Account', 'mybedroomfun-archive' ); ?></span>
+			<a
+				class="mbf-header__control"
+				href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : admin_url() ); ?>"
+				title="<?php esc_attr_e( 'Account', 'mybedroomfun-archive' ); ?>"
+			>
+				<?php echo mbf_icon_svg( 'account' ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( 'Account', 'mybedroomfun-archive' ); ?></span>
 			</a>
-			<a class="mbf-header__control" href="<?php echo esc_url( function_exists( 'mbf_wishlist_url' ) ? mbf_wishlist_url() : '#' ); ?>">
-				<span class="mbf-header__control-label"><?php esc_html_e( 'Wishlist', 'mybedroomfun-archive' ); ?></span>
+			<a
+				class="mbf-header__control"
+				href="<?php echo esc_url( function_exists( 'mbf_wishlist_url' ) ? mbf_wishlist_url() : '#' ); ?>"
+				title="<?php esc_attr_e( 'Wishlist', 'mybedroomfun-archive' ); ?>"
+			>
+				<?php echo mbf_icon_svg( 'wishlist' ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( 'Wishlist', 'mybedroomfun-archive' ); ?></span>
 			</a>
 			<?php if ( function_exists( 'WC' ) ) : ?>
-				<a class="cart-contents mbf-header__control" href="<?php echo esc_url( wc_get_cart_url() ); ?>">
-					<span class="mbf-header__control-label"><?php esc_html_e( 'Cart', 'mybedroomfun-archive' ); ?></span>
+				<a
+					class="cart-contents mbf-header__control"
+					href="<?php echo esc_url( wc_get_cart_url() ); ?>"
+					title="<?php esc_attr_e( 'Cart', 'mybedroomfun-archive' ); ?>"
+				>
+					<?php echo mbf_icon_svg( 'cart' ); ?>
+					<span class="screen-reader-text"><?php esc_html_e( 'Cart', 'mybedroomfun-archive' ); ?></span>
 					<span class="count"><?php echo esc_html( WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ); ?></span>
 				</a>
 			<?php endif; ?>

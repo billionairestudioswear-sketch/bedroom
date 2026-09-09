@@ -182,38 +182,26 @@ function mbf_get_shopping_categories( $top_level_limit = 0 ) {
 }
 
 /**
- * Top product categories by product count, for the promotional
- * homepage banners when no manual banner is set via the Customizer.
- * The archived homepage had 3 promo banners linking to specific old
- * categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled
- * Butt Plugs") -- those are Nov 2023 taxonomy and are not recreated
- * here; picking the current catalog's own top categories keeps this
- * section connected to whatever taxonomy actually exists today.
+ * Original, hand-drawn line icons for the header account/wishlist/cart
+ * controls -- not Flatsome's icon font (proprietary to that theme,
+ * excluded per the build brief). 24x24, stroke-based, inherits color
+ * via currentColor so CSS controls its appearance.
  *
- * @param int $limit Number of categories to return.
- * @return WP_Term[]
+ * @param string $name One of 'account', 'wishlist', 'cart'.
+ * @return string Inline <svg> markup, or '' for an unknown name.
  */
-function mbf_get_top_categories_by_count( $limit = 2 ) {
-	$transient_key = 'mbf_top_categories_' . $limit;
-	$cached        = get_transient( $transient_key );
+function mbf_icon_svg( $name ) {
+	$icons = array(
+		'account'  => '<circle cx="12" cy="8" r="3.25"></circle><path d="M4.5 20c1.4-4 4.2-6 7.5-6s6.1 2 7.5 6"></path>',
+		'wishlist' => '<path d="M12 20S4 14.9 4 9.6C4 6.8 6.1 4.8 8.6 4.8c1.4 0 2.7.7 3.4 1.8.7-1.1 2-1.8 3.4-1.8 2.5 0 4.6 2 4.6 4.8 0 5.3-8 10.4-8 10.4Z"></path>',
+		'cart'     => '<circle cx="9.5" cy="20" r="1.4"></circle><circle cx="17" cy="20" r="1.4"></circle><path d="M3.5 4h2.2l1.9 10.4a1.8 1.8 0 0 0 1.8 1.5h8.4a1.8 1.8 0 0 0 1.8-1.5L21 7.5H6.4"></path>',
+	);
 
-	if ( false !== $cached ) {
-		return $cached;
+	if ( empty( $icons[ $name ] ) ) {
+		return '';
 	}
 
-	$terms = get_terms( array(
-		'taxonomy'   => 'product_cat',
-		'hide_empty' => true,
-		'orderby'    => 'count',
-		'order'      => 'DESC',
-		'number'     => $limit,
-	) );
-
-	$terms = is_wp_error( $terms ) ? array() : $terms;
-
-	set_transient( $transient_key, $terms, HOUR_IN_SECONDS * 12 );
-
-	return $terms;
+	return '<svg class="mbf-icon mbf-icon--' . esc_attr( $name ) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $icons[ $name ] . '</svg>';
 }
 
 /**

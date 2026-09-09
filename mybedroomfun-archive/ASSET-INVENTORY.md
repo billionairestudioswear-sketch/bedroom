@@ -48,9 +48,11 @@ kept out of PHP defaults deliberately, explained there).
   Flatsome's own bundled icon font. No font file was captured in the
   save (and it wouldn't be usable if it had been — it ships with the
   paid Flatsome theme, and the build brief excludes Flatsome source).
-  The theme uses plain text labels instead ("Account" / "Wishlist" /
-  "Cart"), which is the honest original substitute, not a claim of
-  visual identity with the archive.
+  The theme uses original, hand-drawn inline SVG line icons instead
+  (`mbf_icon_svg()` in `inc/template-tags.php` — account/wishlist/cart),
+  each with a visually-hidden text label for screen readers. This is
+  an honest original substitute, not a claim of visual identity with
+  Flatsome's bundled icon set.
 
 ## Could not be recovered at all
 

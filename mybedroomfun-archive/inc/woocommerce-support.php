@@ -149,8 +149,13 @@ function mbf_cart_link_fragment( $fragments ) {
 	ob_start();
 	$count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 	?>
-	<a class="cart-contents mbf-header__control" href="<?php echo esc_url( wc_get_cart_url() ); ?>">
-		<span class="mbf-header__control-label"><?php esc_html_e( 'Cart', 'mybedroomfun-archive' ); ?></span>
+	<a
+		class="cart-contents mbf-header__control"
+		href="<?php echo esc_url( wc_get_cart_url() ); ?>"
+		title="<?php esc_attr_e( 'Cart', 'mybedroomfun-archive' ); ?>"
+	>
+		<?php echo function_exists( 'mbf_icon_svg' ) ? mbf_icon_svg( 'cart' ) : ''; ?>
+		<span class="screen-reader-text"><?php esc_html_e( 'Cart', 'mybedroomfun-archive' ); ?></span>
 		<span class="count"><?php echo esc_html( $count ); ?></span>
 	</a>
 	<?php

@@ -19,6 +19,7 @@ $mbf_includes = array(
 	'inc/template-tags.php',
 	'inc/woocommerce-support.php',
 	'inc/newsletter.php',
+	'inc/customizer.php',
 );
 
 foreach ( $mbf_includes as $mbf_file ) {

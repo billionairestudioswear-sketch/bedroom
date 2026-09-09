@@ -106,12 +106,24 @@
 
 .mbf-header__control {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	font-size: 0.75rem;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
 	text-decoration: none;
 	color: var(--mbf-ink);
 	position: relative;
+	border-radius: 999px;
+}
+
+.mbf-header__control:hover,
+.mbf-header__control:focus-visible {
+	background: var(--mbf-surface-alt);
+}
+
+.mbf-icon {
+	width: 22px;
+	height: 22px;
 }
 
 .mbf-header__control .count {

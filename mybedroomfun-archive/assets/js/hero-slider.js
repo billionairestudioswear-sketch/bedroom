@@ -2,11 +2,12 @@
  * Minimal vanilla JS for the homepage hero slider. Only enqueued when
  * 2+ slides exist (see inc/enqueue.php) -- a single-slide hero has no
  * controls in the markup at all, so this script has nothing to do and
- * isn't loaded. No autoplay: slides only change on explicit user
- * action, which is the simplest way to respect
- * prefers-reduced-motion (there is no motion unless the user asks for
- * it) -- the CSS crossfade itself is also disabled under that media
- * query (see assets/css/homepage.css).
+ * isn't loaded.
+ *
+ * Autoplay is intentionally simple and accessible: it never starts at
+ * all when the visitor has requested prefers-reduced-motion, and it
+ * pauses on hover or keyboard focus so it can always be read/stopped
+ * (WCAG 2.2.2 Pause, Stop, Hide).
  */
 ( function () {
 	'use strict';
@@ -28,6 +29,9 @@
 		}
 
 		var current = 0;
+		var AUTOPLAY_MS = 6000;
+		var timer = null;
+		var reducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
 		function goTo( index ) {
 			var next = ( index + slides.length ) % slides.length;
@@ -62,6 +66,22 @@
 			current = next;
 		}
 
+		function stopAutoplay() {
+			if ( timer ) {
+				window.clearInterval( timer );
+				timer = null;
+			}
+		}
+
+		function startAutoplay() {
+			if ( reducedMotion || timer ) {
+				return;
+			}
+			timer = window.setInterval( function () {
+				goTo( current + 1 );
+			}, AUTOPLAY_MS );
+		}
+
 		if ( prevBtn ) {
 			prevBtn.addEventListener( 'click', function () {
 				goTo( current - 1 );
@@ -79,5 +99,12 @@
 				goTo( index );
 			} );
 		} );
+
+		hero.addEventListener( 'mouseenter', stopAutoplay );
+		hero.addEventListener( 'mouseleave', startAutoplay );
+		hero.addEventListener( 'focusin', stopAutoplay );
+		hero.addEventListener( 'focusout', startAutoplay );
+
+		startAutoplay();
 	} );
 } )();

@@ -71,11 +71,16 @@ ul.products {
 
 ul.products li.product {
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
 ul.products li.product a img {
 	border-radius: var(--mbf-radius);
 	background: var(--mbf-surface-alt);
+	aspect-ratio: 1;
+	width: 100%;
+	object-fit: cover;
 }
 
 ul.products li.product .woocommerce-loop-product__title {
@@ -109,7 +114,11 @@ ul.products li.product .star-rating {
 
 ul.products li.product .button {
 	display: inline-block;
-	margin-top: 0.4rem;
+	/* Pushes the button to the bottom of the card regardless of how
+	   many lines the title/rating/price above it take up, so buttons
+	   line up across a row even when product titles vary in length. */
+	margin-top: auto;
+	align-self: flex-start;
 	padding: 0.5rem 0.9rem;
 	font-size: 0.8rem;
 	border-radius: var(--mbf-radius);

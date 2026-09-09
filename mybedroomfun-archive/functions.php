@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MBF_THEME_VERSION', '1.3.0' );
+define( 'MBF_THEME_VERSION', '1.4.0' );
 define( 'MBF_THEME_DIR', get_template_directory() );
 define( 'MBF_THEME_URI', get_template_directory_uri() );
 

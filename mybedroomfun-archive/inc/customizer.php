@@ -54,6 +54,56 @@ function mbf_customize_register_hero( $wp_customize ) {
 add_action( 'customize_register', 'mbf_customize_register_hero' );
 
 /**
+ * Register the header text Customizer section: the top-bar
+ * announcement line and the two shipping lines shown next to the
+ * account/wishlist/cart controls. Defaults are the exact wording
+ * recovered from the Nov 2023 archive snapshot, per the client's
+ * explicit direction to restore it.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager.
+ */
+function mbf_customize_register_header_text( $wp_customize ) {
+	$wp_customize->add_section( 'mbf_header_text', array(
+		'title'    => __( 'Header Text', 'mybedroomfun-archive' ),
+		'priority' => 150,
+	) );
+
+	$wp_customize->add_setting( 'mbf_announcement_text', array(
+		'default'           => __( '100% Discreet & Private Adult Sex Toy Shipping', 'mybedroomfun-archive' ),
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'mbf_announcement_text', array(
+		'section'  => 'mbf_header_text',
+		'label'    => __( 'Top bar announcement text', 'mybedroomfun-archive' ),
+		'type'     => 'text',
+		'priority' => 10,
+	) );
+
+	$wp_customize->add_setting( 'mbf_shipping_line_1', array(
+		'default'           => __( 'FREE Shipping Over $60+', 'mybedroomfun-archive' ),
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'mbf_shipping_line_1', array(
+		'section'  => 'mbf_header_text',
+		'label'    => __( 'Shipping line 1', 'mybedroomfun-archive' ),
+		'type'     => 'text',
+		'priority' => 20,
+	) );
+
+	$wp_customize->add_setting( 'mbf_shipping_line_2', array(
+		'default'           => __( 'Discreet Shipping & Billing', 'mybedroomfun-archive' ),
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'mbf_shipping_line_2', array(
+		'section'  => 'mbf_header_text',
+		'label'    => __( 'Shipping line 2', 'mybedroomfun-archive' ),
+		'type'     => 'text',
+		'priority' => 30,
+	) );
+}
+add_action( 'customize_register', 'mbf_customize_register_header_text' );
+
+/**
  * Sanitize a submitted category id: must be 0 (unset) or the id of an
  * existing, non-error product_cat term.
  *

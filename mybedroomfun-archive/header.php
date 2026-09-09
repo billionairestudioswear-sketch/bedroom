@@ -1,8 +1,9 @@
 <?php
 /**
- * Site header: announcement bar, utility links, search-centered
- * header, shipping message, account/wishlist/cart controls, and the
- * dark navigation bar with the "Shopping Categories" mega menu.
+ * Site header: single teal top bar (announcement + utility links +
+ * social), white main header (logo, search, shipping block, account/
+ * wishlist/cart controls), and the dark navigation bar with the
+ * "Shopping Categories" mega menu + collapsible mobile nav.
  *
  * @package MyBedroomFun_Archive
  */
@@ -25,48 +26,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <header class="mbf-header">
 
-	<div class="mbf-announcement">
-		<p class="mbf-container">
-			<?php echo esc_html( get_theme_mod( 'mbf_announcement_text', __( 'Wellness and intimacy essentials.', 'mybedroomfun-archive' ) ) ); ?>
-		</p>
-	</div>
-
 	<?php
 	$mbf_instagram_url = get_theme_mod( 'mbf_social_instagram_url', '' );
-	$mbf_twitter_url   = get_theme_mod( 'mbf_social_twitter_url', '' );
+	$mbf_twitter_url    = get_theme_mod( 'mbf_social_twitter_url', '' );
 	$mbf_has_utility    = has_nav_menu( 'utility' );
 	$mbf_has_social     = $mbf_instagram_url || $mbf_twitter_url;
 	?>
-	<?php if ( $mbf_has_utility || $mbf_has_social ) : ?>
-		<div class="mbf-utility mbf-container">
-			<?php if ( $mbf_has_utility ) : ?>
-				<?php
-				wp_nav_menu( array(
-					'theme_location' => 'utility',
-					'container'      => false,
-					'menu_class'     => 'mbf-utility__menu',
-					'depth'          => 1,
-				) );
-				?>
-			<?php endif; ?>
-			<?php if ( $mbf_has_social ) : ?>
-				<div class="mbf-utility__social">
-					<?php if ( $mbf_instagram_url ) : ?>
-						<a href="<?php echo esc_url( $mbf_instagram_url ); ?>" target="_blank" rel="noopener noreferrer nofollow" title="<?php esc_attr_e( 'Instagram', 'mybedroomfun-archive' ); ?>">
-							<?php echo mbf_icon_svg( 'instagram' ); ?>
-							<span class="screen-reader-text"><?php esc_html_e( 'Instagram', 'mybedroomfun-archive' ); ?></span>
-						</a>
+	<div class="mbf-topbar">
+		<div class="mbf-container mbf-topbar__inner">
+			<p class="mbf-topbar__message">
+				<?php echo esc_html( get_theme_mod( 'mbf_announcement_text', __( '100% Discreet & Private Adult Sex Toy Shipping', 'mybedroomfun-archive' ) ) ); ?>
+			</p>
+			<?php if ( $mbf_has_utility || $mbf_has_social ) : ?>
+				<div class="mbf-topbar__right">
+					<?php if ( $mbf_has_utility ) : ?>
+						<?php
+						wp_nav_menu( array(
+							'theme_location' => 'utility',
+							'container'      => false,
+							'menu_class'     => 'mbf-utility__menu',
+							'depth'          => 1,
+						) );
+						?>
 					<?php endif; ?>
-					<?php if ( $mbf_twitter_url ) : ?>
-						<a href="<?php echo esc_url( $mbf_twitter_url ); ?>" target="_blank" rel="noopener noreferrer nofollow" title="<?php esc_attr_e( 'Twitter', 'mybedroomfun-archive' ); ?>">
-							<?php echo mbf_icon_svg( 'twitter' ); ?>
-							<span class="screen-reader-text"><?php esc_html_e( 'Twitter', 'mybedroomfun-archive' ); ?></span>
-						</a>
+					<?php if ( $mbf_has_social ) : ?>
+						<div class="mbf-utility__social">
+							<?php if ( $mbf_instagram_url ) : ?>
+								<a href="<?php echo esc_url( $mbf_instagram_url ); ?>" target="_blank" rel="noopener noreferrer nofollow" title="<?php esc_attr_e( 'Instagram', 'mybedroomfun-archive' ); ?>">
+									<?php echo mbf_icon_svg( 'instagram' ); ?>
+									<span class="screen-reader-text"><?php esc_html_e( 'Instagram', 'mybedroomfun-archive' ); ?></span>
+								</a>
+							<?php endif; ?>
+							<?php if ( $mbf_twitter_url ) : ?>
+								<a href="<?php echo esc_url( $mbf_twitter_url ); ?>" target="_blank" rel="noopener noreferrer nofollow" title="<?php esc_attr_e( 'Twitter', 'mybedroomfun-archive' ); ?>">
+									<?php echo mbf_icon_svg( 'twitter' ); ?>
+									<span class="screen-reader-text"><?php esc_html_e( 'Twitter', 'mybedroomfun-archive' ); ?></span>
+								</a>
+							<?php endif; ?>
+						</div>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 		</div>
-	<?php endif; ?>
+	</div>
 
 	<div class="mbf-header__main mbf-container">
 		<div class="mbf-header__brand">
@@ -83,8 +85,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						src="<?php echo esc_url( MBF_THEME_URI . '/assets/images/recovered/mybedroomfun-logo.png' ); ?>"
 						alt="<?php bloginfo( 'name' ); ?>"
 						class="mbf-header__logo-fallback"
-						width="180"
-						height="43"
+						width="220"
+						height="53"
 					/>
 				</a>
 				<?php
@@ -103,9 +105,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="mbf-header__right">
-			<p class="mbf-shipping-message">
-				<?php echo esc_html( get_theme_mod( 'mbf_shipping_message', __( 'Shipping details are confirmed at checkout.', 'mybedroomfun-archive' ) ) ); ?>
-			</p>
+			<div class="mbf-header__shipping">
+				<p class="mbf-shipping-line mbf-shipping-line--1">
+					<?php echo esc_html( get_theme_mod( 'mbf_shipping_line_1', __( 'FREE Shipping Over $60+', 'mybedroomfun-archive' ) ) ); ?>
+				</p>
+				<p class="mbf-shipping-line mbf-shipping-line--2">
+					<?php echo esc_html( get_theme_mod( 'mbf_shipping_line_2', __( 'Discreet Shipping & Billing', 'mybedroomfun-archive' ) ) ); ?>
+				</p>
+			</div>
 			<div class="mbf-header__controls">
 				<a
 					class="mbf-header__control"
@@ -139,7 +146,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<nav class="mbf-nav" aria-label="<?php esc_attr_e( 'Primary', 'mybedroomfun-archive' ); ?>">
-		<div class="mbf-container mbf-nav__inner">
+		<div class="mbf-container mbf-nav__bar">
+			<button
+				type="button"
+				class="mbf-nav__toggle"
+				aria-expanded="false"
+				aria-controls="mbf-nav-inner"
+				data-nav-toggle
+			>
+				<?php esc_html_e( 'Menu', 'mybedroomfun-archive' ); ?>
+			</button>
+		</div>
+		<div id="mbf-nav-inner" class="mbf-container mbf-nav__inner" data-nav-panel>
 
 			<?php
 			/**
@@ -149,11 +167,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * categories when they exist, or an honest empty-state
 			 * message when they don't (WooCommerce inactive, or active
 			 * with no categories yet) -- never fabricated links.
+			 *
+			 * Capped so a catalog with a large, multilevel taxonomy
+			 * (e.g. hundreds of top-level categories) can't blow up the
+			 * mega menu into an unmanageable number of columns -- the
+			 * panel itself also scroll-contains (see .mbf-mega__columns).
 			 */
-			// Capped so a catalog with a large, multilevel taxonomy (e.g.
-			// hundreds of top-level categories) can't blow up the mega
-			// menu into an unmanageable number of columns -- the panel
-			// itself also scroll-contains (see .mbf-mega__columns).
 			$mbf_categories = function_exists( 'mbf_get_shopping_categories' ) ? mbf_get_shopping_categories( 24 ) : array();
 			?>
 			<div class="mbf-mega">
@@ -163,6 +182,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					aria-expanded="false"
 					aria-controls="mbf-mega-panel"
 				>
+					<span class="mbf-mega__trigger-icon" aria-hidden="true"></span>
 					<?php esc_html_e( 'Shopping Categories', 'mybedroomfun-archive' ); ?>
 				</button>
 				<div id="mbf-mega-panel" class="mbf-mega__panel" hidden>
@@ -201,7 +221,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'container'      => false,
 				'menu_class'     => 'mbf-nav__menu',
 				'fallback_cb'    => false,
-				'depth'          => 1,
+				'depth'          => 0,
 			) );
 			?>
 		</div>

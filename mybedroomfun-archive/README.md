@@ -146,6 +146,16 @@ without theme changes.
 
 ## Customizer
 
+**Header Text** (`Appearance → Customize → Header Text`) has a real,
+registered UI for the 3 header text strings: the top-bar announcement
+line and both shipping lines shown next to the account/wishlist/cart
+controls. Their defaults are the exact wording recovered from the Nov
+2023 archive snapshot ("100% Discreet & Private Adult Sex Toy
+Shipping", "FREE Shipping Over $60+", "Discreet Shipping & Billing")
+— restored deliberately per explicit client direction, not an
+unverified claim slipped back in; nowhere else in the theme (benefits
+strip, footer, etc.) uses specific policy numbers.
+
 **Homepage Hero Slider** (`Appearance → Customize → Homepage Hero
 Slider`) — 5 image slots. Slide 1 defaults to the recovered archive
 image; slides 2-5 default to empty and are omitted from the page
@@ -170,9 +180,6 @@ mu-plugin if you want a UI for them):
 
 | Mod | Purpose |
 |---|---|
-| `mbf_announcement_text` | Announcement bar copy |
-| `mbf_shipping_message` | Shipping strip copy under the header |
-| `mbf_hero_image` | Homepage hero image (image-only hero, no headline/subhead) |
 | `mbf_footer_about` | Footer "About the Store" blurb |
 | `mbf_social_instagram_url` / `mbf_social_twitter_url` | Utility-bar social icons — the icon link is only rendered once its URL mod is set; both empty by default (recovered from the archive's header, which had Instagram/Twitter icons appended to the utility links) |
 

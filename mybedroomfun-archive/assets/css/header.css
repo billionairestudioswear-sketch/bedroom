@@ -1,25 +1,34 @@
-/* Announcement bar, utility links, search-centered header, shipping message. */
+/* Top bar (announcement + utility links + social), search-centered
+   main header, shipping block, account/wishlist/cart controls. */
 
-.mbf-announcement {
+.mbf-topbar {
 	background: var(--mbf-turquoise);
 	color: #fff;
 }
 
-.mbf-announcement p {
-	margin: 0;
-	padding: 0.4rem 0;
-	font-size: 0.8rem;
-	text-align: center;
-	letter-spacing: 0.02em;
-}
-
-.mbf-utility {
+.mbf-topbar__inner {
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	gap: var(--mbf-gap-sm);
-	padding: 0.4rem 0;
-	border-bottom: 1px solid var(--mbf-border);
+	padding: 0.5rem 0;
+}
+
+.mbf-topbar__message {
+	margin: 0;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+.mbf-topbar__right {
+	display: flex;
+	align-items: center;
+	gap: var(--mbf-gap-sm);
+	margin-left: auto;
 }
 
 .mbf-utility__menu {
@@ -34,18 +43,19 @@
 
 .mbf-utility__menu a {
 	text-decoration: none;
-	color: var(--mbf-muted);
+	color: #fff;
 }
 
 .mbf-utility__social {
 	display: flex;
 	gap: 0.5rem;
-	margin-left: var(--mbf-gap-sm);
+	padding-left: var(--mbf-gap-sm);
+	border-left: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .mbf-utility__social a {
 	display: flex;
-	color: var(--mbf-muted);
+	color: #fff;
 }
 
 .mbf-utility__social .mbf-icon {
@@ -74,7 +84,7 @@
 }
 
 .mbf-header__logo-fallback {
-	height: 43px;
+	height: 53px;
 	width: auto;
 }
 
@@ -84,55 +94,89 @@
 	order: 3;
 }
 
-.mbf-header__search form,
-.mbf-header__search .woocommerce-product-search {
+/* Large, fully rounded search field with an icon-only submit button --
+   see searchform.php / woocommerce/product-searchform.php, which
+   output this exact markup instead of WooCommerce's default
+   text-button search form. */
+.mbf-search-form {
 	display: flex;
 	width: 100%;
+	border: 1px solid var(--mbf-border);
+	border-radius: 999px;
+	background: var(--mbf-surface);
+	overflow: hidden;
 }
 
-.mbf-header__search input[type="search"] {
+.mbf-search-form .search-field {
 	flex: 1;
 	min-width: 0;
-	padding: 0.6rem 0.8rem;
-	border: 1px solid var(--mbf-border);
-	border-radius: var(--mbf-radius) 0 0 var(--mbf-radius);
+	padding: 0.7rem 1.2rem;
+	border: 0;
+	background: transparent;
 	font-size: 0.95rem;
+	font-family: inherit;
 }
 
-/* WooCommerce's product search form (and WordPress's own get_search_form()
-   fallback) submit an <input type="submit">, not a <button> element -- style
-   both so the control isn't left as an unstyled default browser button. */
-.mbf-header__search button,
-.mbf-header__search input[type="submit"],
-.mbf-header__search .search-submit {
-	padding: 0 1rem;
-	border: 1px solid var(--mbf-dark);
-	background: var(--mbf-dark);
-	color: #fff;
-	font-size: 0.95rem;
-	line-height: 1;
-	border-radius: 0 var(--mbf-radius) var(--mbf-radius) 0;
-	cursor: pointer;
+.mbf-search-form .search-field:focus {
+	outline: none;
+}
+
+.mbf-search-form__submit {
 	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3rem;
+	border: 0;
+	background: transparent;
+	color: var(--mbf-ink);
+	cursor: pointer;
+}
+
+.mbf-search-form__submit:hover,
+.mbf-search-form__submit:focus-visible {
+	color: var(--mbf-turquoise-dark);
 }
 
 .mbf-header__right {
 	flex-shrink: 0;
 	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	gap: 0.4rem;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--mbf-gap-sm);
 	margin-left: auto;
+	padding-left: var(--mbf-gap-sm);
+	border-left: 1px solid var(--mbf-border);
+}
+
+.mbf-header__shipping {
+	text-align: right;
+}
+
+.mbf-shipping-line {
+	margin: 0;
+	font-size: 0.8rem;
+	line-height: 1.3;
+}
+
+.mbf-shipping-line--1 {
+	font-weight: 700;
+	color: var(--mbf-ink);
+}
+
+.mbf-shipping-line--2 {
+	color: var(--mbf-muted);
 }
 
 .mbf-header__controls {
 	display: flex;
-	gap: 0.6rem;
+	gap: 0.5rem;
+	padding-left: var(--mbf-gap-sm);
+	border-left: 1px solid var(--mbf-border);
 }
 
 /* Recovered from the archive's header markup: account/wishlist/cart
-   are rendered as round, filled, primary-color (pink) icon buttons --
-   not plain outlined icons. */
+   are pink, soft-rounded SQUARE icon buttons -- not round/circular. */
 .mbf-header__control {
 	display: flex;
 	align-items: center;
@@ -143,7 +187,7 @@
 	color: #fff;
 	background: var(--mbf-accent);
 	position: relative;
-	border-radius: 999px;
+	border-radius: 8px;
 }
 
 .mbf-header__control:hover,
@@ -169,13 +213,6 @@
 	right: -0.6rem;
 }
 
-.mbf-shipping-message {
-	text-align: right;
-	font-size: 0.8rem;
-	color: var(--mbf-muted);
-	margin: 0;
-}
-
 @media (min-width: 768px) {
 	.mbf-header__main {
 		flex-wrap: nowrap;
@@ -185,5 +222,29 @@
 		order: initial;
 		flex-grow: 2;
 		max-width: 680px;
+	}
+
+	.mbf-header__shipping {
+		display: block;
+	}
+}
+
+@media (max-width: 767px) {
+	/* The two-line shipping block is the first thing to go on narrow
+	   mobile widths -- the account/wishlist/cart controls (and their
+	   dividers) stay, so nothing critical disappears, only secondary
+	   text. */
+	.mbf-header__shipping {
+		display: none;
+	}
+
+	.mbf-header__right {
+		border-left: 0;
+		padding-left: 0;
+	}
+
+	.mbf-header__controls {
+		border-left: 0;
+		padding-left: 0;
 	}
 }

@@ -3,11 +3,16 @@
 .mbf-nav {
 	background: var(--mbf-dark);
 	color: #fff;
+	/* Without this, an empty nav (no menu assigned yet, no product
+	   categories yet) collapses to 0 height and the dark bar disappears
+	   entirely instead of showing as an (empty) bar. */
+	min-height: 3rem;
 }
 
 .mbf-nav__inner {
 	display: flex;
 	align-items: center;
+	min-height: 3rem;
 	gap: var(--mbf-gap-md);
 	flex-wrap: wrap;
 	position: relative;

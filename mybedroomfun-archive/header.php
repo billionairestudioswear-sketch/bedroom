@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="mbf-announcement">
 		<p class="mbf-container">
-			<?php echo esc_html( get_theme_mod( 'mbf_announcement_text', __( 'Discreet packaging on every order, always.', 'mybedroomfun-archive' ) ) ); ?>
+			<?php echo esc_html( get_theme_mod( 'mbf_announcement_text', __( 'Wellness and intimacy essentials.', 'mybedroomfun-archive' ) ) ); ?>
 		</p>
 	</div>
 
@@ -86,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<p class="mbf-shipping-message mbf-container">
-		<?php echo esc_html( get_theme_mod( 'mbf_shipping_message', __( 'Free shipping on orders over $49.', 'mybedroomfun-archive' ) ) ); ?>
+		<?php echo esc_html( get_theme_mod( 'mbf_shipping_message', __( 'Shipping details are confirmed at checkout.', 'mybedroomfun-archive' ) ) ); ?>
 	</p>
 
 	<nav class="mbf-nav" aria-label="<?php esc_attr_e( 'Primary', 'mybedroomfun-archive' ); ?>">

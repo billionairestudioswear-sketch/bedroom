@@ -44,6 +44,7 @@
 
 .mbf-header__brand {
 	flex: 0 0 auto;
+	min-width: 0;
 }
 
 .mbf-header__site-name {
@@ -54,6 +55,7 @@
 
 .mbf-header__search {
 	flex: 1 1 320px;
+	min-width: 0; /* let this flex item shrink instead of overflowing the row and pushing controls off-screen */
 	order: 3;
 }
 
@@ -65,22 +67,32 @@
 
 .mbf-header__search input[type="search"] {
 	flex: 1;
+	min-width: 0;
 	padding: 0.6rem 0.8rem;
 	border: 1px solid var(--mbf-border);
 	border-radius: var(--mbf-radius) 0 0 var(--mbf-radius);
 	font-size: 0.95rem;
 }
 
-.mbf-header__search button {
+/* WooCommerce's product search form (and WordPress's own get_search_form()
+   fallback) submit an <input type="submit">, not a <button> element -- style
+   both so the control isn't left as an unstyled default browser button. */
+.mbf-header__search button,
+.mbf-header__search input[type="submit"],
+.mbf-header__search .search-submit {
 	padding: 0 1rem;
 	border: 1px solid var(--mbf-dark);
 	background: var(--mbf-dark);
 	color: #fff;
+	font-size: 0.95rem;
+	line-height: 1;
 	border-radius: 0 var(--mbf-radius) var(--mbf-radius) 0;
 	cursor: pointer;
+	flex-shrink: 0;
 }
 
 .mbf-header__controls {
+	flex-shrink: 0;
 	display: flex;
 	gap: var(--mbf-gap-sm);
 	margin-left: auto;

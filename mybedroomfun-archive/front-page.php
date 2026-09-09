@@ -113,7 +113,7 @@ get_header();
 		<div class="mbf-container">
 			<h1><?php esc_html_e( 'Sex Toys &amp; Intimate Wellness Products', 'mybedroomfun-archive' ); ?></h1>
 			<p>
-				<?php esc_html_e( 'From first-time exploration to everyday self-care, our curated range covers every stage of your wellness journey. Every order ships in plain, unmarked packaging.', 'mybedroomfun-archive' ); ?>
+				<?php esc_html_e( 'From first-time exploration to everyday self-care, our curated range covers every stage of your wellness journey.', 'mybedroomfun-archive' ); ?>
 			</p>
 			<p>
 				<?php esc_html_e( 'Browse by category to find exactly what you need, or check out this week\'s featured picks and current deals above.', 'mybedroomfun-archive' ); ?>
@@ -124,20 +124,20 @@ get_header();
 	<section class="mbf-benefits">
 		<div class="mbf-container mbf-benefits__grid">
 			<div class="mbf-benefits__item">
-				<h2><?php esc_html_e( 'Discreet Packaging', 'mybedroomfun-archive' ); ?></h2>
-				<p><?php esc_html_e( 'No branding, no surprises.', 'mybedroomfun-archive' ); ?></p>
+				<h2><?php esc_html_e( 'Packaging', 'mybedroomfun-archive' ); ?></h2>
+				<p><?php esc_html_e( 'Details available at checkout.', 'mybedroomfun-archive' ); ?></p>
 			</div>
 			<div class="mbf-benefits__item">
-				<h2><?php esc_html_e( 'Free Shipping', 'mybedroomfun-archive' ); ?></h2>
-				<p><?php esc_html_e( 'On orders over $49.', 'mybedroomfun-archive' ); ?></p>
+				<h2><?php esc_html_e( 'Shipping', 'mybedroomfun-archive' ); ?></h2>
+				<p><?php esc_html_e( 'Details available at checkout.', 'mybedroomfun-archive' ); ?></p>
 			</div>
 			<div class="mbf-benefits__item">
 				<h2><?php esc_html_e( 'Secure Checkout', 'mybedroomfun-archive' ); ?></h2>
-				<p><?php esc_html_e( 'Encrypted payment processing.', 'mybedroomfun-archive' ); ?></p>
+				<p><?php esc_html_e( 'Payments processed securely.', 'mybedroomfun-archive' ); ?></p>
 			</div>
 			<div class="mbf-benefits__item">
-				<h2><?php esc_html_e( 'Easy Returns', 'mybedroomfun-archive' ); ?></h2>
-				<p><?php esc_html_e( '30-day return window.', 'mybedroomfun-archive' ); ?></p>
+				<h2><?php esc_html_e( 'Returns', 'mybedroomfun-archive' ); ?></h2>
+				<p><?php esc_html_e( 'See our returns policy.', 'mybedroomfun-archive' ); ?></p>
 			</div>
 		</div>
 	</section>

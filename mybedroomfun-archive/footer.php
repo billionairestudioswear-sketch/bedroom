@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="mbf-footer__column">
 				<h2 class="mbf-footer__heading"><?php bloginfo( 'name' ); ?></h2>
 				<p class="mbf-footer__about">
-					<?php echo esc_html( get_theme_mod( 'mbf_footer_about', __( 'Wellness and intimacy products, shipped discreetly.', 'mybedroomfun-archive' ) ) ); ?>
+					<?php echo esc_html( get_theme_mod( 'mbf_footer_about', __( 'Wellness and intimacy products.', 'mybedroomfun-archive' ) ) ); ?>
 				</p>
 			</div>
 

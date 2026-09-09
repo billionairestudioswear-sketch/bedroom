@@ -49,7 +49,17 @@ against production (mybedroomfun.com).
      these are required for the theme to render (each one is simply
      empty/absent until assigned — see "Empty-data behavior" below),
      but the header nav, utility links, and both footer link columns
-     stay blank until they are.
+     stay blank until they are. **Do not guess link destinations** —
+     `ASSET-INVENTORY.md` lists the archive's exact recovered paths
+     (About Us, Contact Us, FAQ, Services, Klarna FAQ, Order Tracking,
+     Exclusive Brands) for reference, but every one needs to be
+     confirmed against production first; this environment cannot check
+     that itself.
+   - **Social icons** (optional): set `mbf_social_instagram_url` /
+     `mbf_social_twitter_url` (no registered Customizer UI yet — see
+     the Customizer section of `README.md`) once you've confirmed the
+     account URLs recovered in `ASSET-INVENTORY.md` are still current.
+     Each icon only appears once its URL is set.
    - **Promotional Banners**: `Appearance → Customize → Promotional
      Banners` — pick a category and upload an image for up to 3
      banner slots. Each dropdown only lists categories that already
@@ -71,7 +81,8 @@ doesn't exist yet, rather than show placeholder/fake content:
 | Symptom | Cause | Fix |
 |---|---|---|
 | Header cart control missing entirely | WooCommerce not active (`function_exists('WC')` is false) | Activate WooCommerce |
-| Category grid / mega menu / all 4 product rails empty | Either WooCommerce inactive, **or** active with 0 products/categories in the catalog yet | Activate WooCommerce; then confirm `Products → All Products` actually lists items on this install |
+| Category grid / all 4 product rails empty | Either WooCommerce inactive, **or** active with 0 products/categories in the catalog yet | Activate WooCommerce; then confirm `Products → All Products` actually lists items on this install |
+| "Shopping Categories" button visible but its dropdown says "No product categories yet" | Same as above | Same as above — the turquoise button itself always renders (it's static chrome, not data); only its dropdown content depends on the catalog |
 | Primary nav / Utility Links / either footer "Information" column empty | No menu assigned to that location yet | Assign a menu at `Appearance → Menus` (see step 7 above) |
 | Promotional banners section entirely absent | No category picked in `Appearance → Customize → Promotional Banners` yet | Pick a category for at least one of the 3 slots |
 | Site title/footer say "Inspiration Station" (or any placeholder) | WordPress `Settings → General → Site Title` hasn't been changed | Change it there — the theme only ever reads this value, never sets it |

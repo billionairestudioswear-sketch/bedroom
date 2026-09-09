@@ -77,6 +77,8 @@ controls, dark nav + "Shopping Categories" mega menu) is in
 | Promotional category banners | **Not recreated as named** — the archive linked to 3 specific Nov 2023 categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled Butt Plugs"). Recreating those by name would mean recreating old taxonomy, which the brief explicitly prohibits. The layout is matched (3 banner slots); the destinations are picked by the admin from the site's *current* categories via Customizer (`inc/customizer.php`) — no automatic selection of any kind, and no free-text URL field, so a banner can never point anywhere but a real existing category. |
 | Container max-width `1200px` | **Not confirmed from this snapshot** — Flatsome's documented default, used because the site's actual computed value lives in a dynamic stylesheet the page save didn't capture. |
 | Flatsome's icon font (account/wishlist/cart/mega-menu icons) | **Deliberately not reused** — proprietary to the paid Flatsome theme, excluded by the brief. Original hand-drawn inline SVG line icons substitute (see `mbf_icon_svg()` in `inc/template-tags.php`), with visually-hidden text labels for accessibility. |
+| Round, filled pink icon-buttons (account/wishlist/cart); the "Shopping Categories" trigger's turquoise fill | **Recovered structurally** — the archive's markup classed these `icon primary button round` (Flatsome's filled circular button style using its `--primary-color`, i.e. the same `#ff3c9c`). Applied to the original SVG icons rather than reused as Flatsome's own button component. |
+| Utility-bar Instagram/Twitter icons | **Recovered as a feature, not specific URLs** — the archive appended live Instagram/Twitter links to the utility menu; this build adds the icons back as opt-in (`mbf_social_instagram_url`/`_twitter_url`, empty by default) since the 2023 URLs found in the snapshot haven't been verified as this account's current handles. |
 
 ## Dynamic data — how it stays cheap
 
@@ -162,6 +164,7 @@ mu-plugin if you want a UI for them):
 | `mbf_shipping_message` | Shipping strip copy under the header |
 | `mbf_hero_image` | Homepage hero image (image-only hero, no headline/subhead) |
 | `mbf_footer_about` | Footer "About the Store" blurb |
+| `mbf_social_instagram_url` / `mbf_social_twitter_url` | Utility-bar social icons — the icon link is only rendered once its URL mod is set; both empty by default (recovered from the archive's header, which had Instagram/Twitter icons appended to the utility links) |
 
 ## Menus to assign after activation
 

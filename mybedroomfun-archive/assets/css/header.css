@@ -15,7 +15,9 @@
 
 .mbf-utility {
 	display: flex;
+	align-items: center;
 	justify-content: flex-end;
+	gap: var(--mbf-gap-sm);
 	padding: 0.4rem 0;
 	border-bottom: 1px solid var(--mbf-border);
 }
@@ -23,6 +25,7 @@
 .mbf-utility__menu {
 	list-style: none;
 	display: flex;
+	flex-wrap: wrap;
 	gap: var(--mbf-gap-sm);
 	margin: 0;
 	padding: 0;
@@ -32,6 +35,22 @@
 .mbf-utility__menu a {
 	text-decoration: none;
 	color: var(--mbf-muted);
+}
+
+.mbf-utility__social {
+	display: flex;
+	gap: 0.5rem;
+	margin-left: var(--mbf-gap-sm);
+}
+
+.mbf-utility__social a {
+	display: flex;
+	color: var(--mbf-muted);
+}
+
+.mbf-utility__social .mbf-icon {
+	width: 16px;
+	height: 16px;
 }
 
 .mbf-header__main {
@@ -97,13 +116,23 @@
 	flex-shrink: 0;
 }
 
-.mbf-header__controls {
+.mbf-header__right {
 	flex-shrink: 0;
 	display: flex;
-	gap: var(--mbf-gap-sm);
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0.4rem;
 	margin-left: auto;
 }
 
+.mbf-header__controls {
+	display: flex;
+	gap: 0.6rem;
+}
+
+/* Recovered from the archive's header markup: account/wishlist/cart
+   are rendered as round, filled, primary-color (pink) icon buttons --
+   not plain outlined icons. */
 .mbf-header__control {
 	display: flex;
 	align-items: center;
@@ -111,23 +140,24 @@
 	width: 2.25rem;
 	height: 2.25rem;
 	text-decoration: none;
-	color: var(--mbf-ink);
+	color: #fff;
+	background: var(--mbf-accent);
 	position: relative;
 	border-radius: 999px;
 }
 
 .mbf-header__control:hover,
 .mbf-header__control:focus-visible {
-	background: var(--mbf-surface-alt);
+	filter: brightness(1.08);
 }
 
 .mbf-icon {
-	width: 22px;
-	height: 22px;
+	width: 20px;
+	height: 20px;
 }
 
 .mbf-header__control .count {
-	background: var(--mbf-accent);
+	background: var(--mbf-dark);
 	color: #fff;
 	border-radius: 999px;
 	font-size: 0.65rem;
@@ -140,10 +170,10 @@
 }
 
 .mbf-shipping-message {
-	text-align: center;
-	font-size: 0.85rem;
+	text-align: right;
+	font-size: 0.8rem;
 	color: var(--mbf-muted);
-	margin: 0 auto var(--mbf-gap-sm);
+	margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -153,6 +183,7 @@
 
 	.mbf-header__search {
 		order: initial;
-		max-width: 520px;
+		flex-grow: 2;
+		max-width: 680px;
 	}
 }

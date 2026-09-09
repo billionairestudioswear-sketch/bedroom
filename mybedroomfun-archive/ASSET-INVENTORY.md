@@ -19,13 +19,44 @@ browse — is the actual source of everything below.
 | `assets/images/recovered/icon-secure.png` | `secure-payment-line.png` (120×120) | Benefits strip: "Secure Payments" |
 | `assets/images/recovered/icon-support.png` | `user-heart-line.png` (120×120) | Benefits strip: "Availability" (best-guess mapping — see below) |
 
-Recovered exact **colors**: `#23c2be` (announcement bar — read from
-the site's own `.header-top{background-color:#23c2be!important}`
-override) and `#ff3c9c` (sitewide `--primary-color` custom property,
-used for buttons/accents). Recovered **typeface**: Lato (site's
-`font-family:"Lato",sans-serif`) — self-hosted locally in
-`assets/fonts/` (two weights, Latin subset, ~46KB total; no external
-font request at runtime).
+Recovered exact **colors**: `#23c2be` (announcement bar, and the
+"Shopping Categories" mega-menu trigger) and `#ff3c9c` (sitewide
+`--primary-color`, applied to the round account/wishlist/cart icon
+buttons — the archive's markup classed them `icon primary button
+round`, Flatsome's filled circular button using that color).
+Recovered **typeface**: Lato (site's `font-family:"Lato",sans-serif`)
+— self-hosted locally in `assets/fonts/` (two weights, Latin subset,
+~46KB total; no external font request at runtime).
+
+Recovered **social links** (utility bar, `header-social-icons` list
+item): `https://www.instagram.com/mybedroomfun/` and
+`https://twitter.com/mybedroomfun`. Not set as defaults — like the
+policy numbers below, these are Nov 2023 data; confirm the accounts
+are still current before pasting them into
+`mbf_social_instagram_url` / `mbf_social_twitter_url`.
+
+## Recovered menu destinations — need production verification
+
+These are the exact relative paths the archive's utility links and
+footer "Information" columns pointed to on `mybedroomfun.com`. This
+environment has no access to production and cannot confirm any of
+these still exist or still 404 — that has to be checked by whoever has
+access, page by page, before building the actual menus:
+
+| Label (from archive) | Path (relative to mybedroomfun.com) |
+|---|---|
+| About Us | `/about-us/` |
+| Contact Us | `/contact-us/` |
+| FAQ | `/faq/` |
+| Services | `/services/` |
+| Klarna FAQ | `/what-is-klarna/` |
+| Order Tracking | `/my-account/order-tracking/` |
+| Exclusive Brands | `/exclusive-brands/` |
+
+Do not paste these into `Appearance → Menus` as custom links without
+checking each one loads on production first — a page can easily have
+moved or been removed since Nov 2023, and a menu item pointing at a
+404 is worse than no menu item.
 
 Recovered **copy** (see README.md's "Recovered archived copy" table —
 kept out of PHP defaults deliberately, explained there).

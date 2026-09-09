@@ -2,7 +2,7 @@
 Theme Name: MyBedroomFun Archive
 Author: MyBedroomFun
 Description: Original lightweight WooCommerce theme rebuilding the MyBedroomFun storefront layout. No page builder, no third-party framework. Dynamically renders the existing WooCommerce catalog.
-Version: 1.0.0
+Version: 1.1.0
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -85,13 +85,10 @@ Text Domain: mybedroomfun-archive
 
 html {
 	-webkit-text-size-adjust: 100%;
-	max-width: 100%;
 }
 
 body {
 	margin: 0;
-	max-width: 100%;
-	overflow-x: hidden;
 	font-family: var(--mbf-font-base);
 	color: var(--mbf-ink);
 	background: var(--mbf-surface);

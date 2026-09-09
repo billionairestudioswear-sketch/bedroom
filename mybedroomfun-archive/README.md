@@ -176,11 +176,25 @@ required for the theme to render —
 each `wp_nav_menu()` call is wrapped in `has_nav_menu()` / falls back
 to nothing rather than WordPress's default "Pages" fallback list.
 
+## Asset cache-busting
+
+Every enqueued CSS/JS file's version string is that file's own
+`filemtime()` (`mbf_asset_version()` in `inc/enqueue.php`), not a
+single shared theme version. Editing any one file automatically
+changes its own `?ver=` on the next page load — there's no version
+number to remember to bump, and no risk of a cache serving stale
+content because a shared version string didn't change. `style.css`'s
+`Version:` header (shown in `Appearance → Themes`) is a separate,
+human-facing release number and is bumped manually when it matters.
+
 ## Validation performed
 
 See the final task output for the full validation log (PHP lint on
-every file, static checks for hard-coded staging/production URLs and
-product/category IDs). No PHP or JS runtime testing was performed here
-because the theme has not been installed on any WordPress
-instance — do that on `staging.mybedroomfun.com` first (see
-`DEPLOYMENT.md`) before treating this as launch-ready.
+every file, static checks for hard-coded staging/production URLs,
+product/category IDs, and unverified policy numbers). No PHP or JS
+runtime testing was performed here because the theme has not been
+installed on any WordPress instance from this environment — do that on
+staging first (see `DEPLOYMENT.md`) before treating this as
+launch-ready. `DEPLOYMENT.md` also lists which visual symptoms are
+WordPress-admin setup (Site Title, menu assignments, WooCommerce
+activation, promotional banners) rather than theme bugs.

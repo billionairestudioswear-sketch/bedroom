@@ -47,12 +47,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="mbf-header__main mbf-container">
 		<div class="mbf-header__brand">
 			<?php
+			// Falls back to the recovered archived logo file (bundled in
+			// the theme) until a real logo is set via Customize > Site
+			// Identity -- see ASSET-INVENTORY.md.
 			if ( has_custom_logo() ) {
 				the_custom_logo();
 			} else {
 				?>
 				<a class="mbf-header__site-name" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php bloginfo( 'name' ); ?>
+					<img
+						src="<?php echo esc_url( MBF_THEME_URI . '/assets/images/recovered/mybedroomfun-logo.png' ); ?>"
+						alt="<?php bloginfo( 'name' ); ?>"
+						class="mbf-header__logo-fallback"
+						width="180"
+						height="43"
+					/>
 				</a>
 				<?php
 			}

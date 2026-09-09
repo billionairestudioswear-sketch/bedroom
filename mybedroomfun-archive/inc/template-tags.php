@@ -182,6 +182,41 @@ function mbf_get_shopping_categories( $top_level_limit = 0 ) {
 }
 
 /**
+ * Top product categories by product count, for the promotional
+ * homepage banners when no manual banner is set via the Customizer.
+ * The archived homepage had 3 promo banners linking to specific old
+ * categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled
+ * Butt Plugs") -- those are Nov 2023 taxonomy and are not recreated
+ * here; picking the current catalog's own top categories keeps this
+ * section connected to whatever taxonomy actually exists today.
+ *
+ * @param int $limit Number of categories to return.
+ * @return WP_Term[]
+ */
+function mbf_get_top_categories_by_count( $limit = 2 ) {
+	$transient_key = 'mbf_top_categories_' . $limit;
+	$cached        = get_transient( $transient_key );
+
+	if ( false !== $cached ) {
+		return $cached;
+	}
+
+	$terms = get_terms( array(
+		'taxonomy'   => 'product_cat',
+		'hide_empty' => true,
+		'orderby'    => 'count',
+		'order'      => 'DESC',
+		'number'     => $limit,
+	) );
+
+	$terms = is_wp_error( $terms ) ? array() : $terms;
+
+	set_transient( $transient_key, $terms, HOUR_IN_SECONDS * 12 );
+
+	return $terms;
+}
+
+/**
  * Invalidate the cached homepage/menu data whenever a product or a
  * product category changes, so the theme never shows stale data.
  */

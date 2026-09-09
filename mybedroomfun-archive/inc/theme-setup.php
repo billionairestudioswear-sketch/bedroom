@@ -34,9 +34,8 @@ function mbf_theme_setup() {
 	register_nav_menus( array(
 		'primary'  => __( 'Primary Navigation', 'mybedroomfun-archive' ),
 		'utility'  => __( 'Utility Links', 'mybedroomfun-archive' ),
-		'footer-1' => __( 'Footer Column 1', 'mybedroomfun-archive' ),
-		'footer-2' => __( 'Footer Column 2', 'mybedroomfun-archive' ),
-		'footer-3' => __( 'Footer Column 3', 'mybedroomfun-archive' ),
+		'footer-1' => __( 'Footer Information Column 1', 'mybedroomfun-archive' ),
+		'footer-2' => __( 'Footer Information Column 2', 'mybedroomfun-archive' ),
 	) );
 }
 add_action( 'after_setup_theme', 'mbf_theme_setup' );

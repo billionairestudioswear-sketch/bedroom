@@ -3,66 +3,21 @@
    rendered outside the shop loop (search results reuse .mbf-rail__grid
    too, loaded via shop.css). */
 
+/* Image-only hero -- the archive had no text/CTA over this banner,
+   just a full-width rotating image (see front-page.php comment). */
 .mbf-hero {
 	background: var(--mbf-surface-alt);
+	line-height: 0;
 }
 
-.mbf-hero__inner {
-	position: relative;
-	min-height: 320px;
-	display: flex;
-	align-items: center;
-	overflow: hidden;
+.mbf-hero__link {
+	display: block;
 }
 
 .mbf-hero__image {
-	position: absolute;
-	inset: 0;
 	width: 100%;
-	height: 100%;
+	height: auto;
 	object-fit: cover;
-	z-index: 0;
-}
-
-.mbf-hero__copy {
-	position: relative;
-	z-index: 1;
-	max-width: 480px;
-	padding: var(--mbf-gap-lg) var(--mbf-gap-sm);
-	background: rgba(255, 255, 255, 0.88);
-	border-radius: var(--mbf-radius);
-}
-
-.mbf-hero__eyebrow {
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	font-size: 0.75rem;
-	color: var(--mbf-turquoise-dark);
-	margin: 0 0 0.5rem;
-}
-
-.mbf-hero__headline {
-	font-size: clamp(1.5rem, 4vw, 2.25rem);
-	font-weight: 700;
-	margin: 0 0 0.5rem;
-}
-
-.mbf-hero__subhead {
-	margin: 0 0 var(--mbf-gap-sm);
-	color: var(--mbf-muted);
-}
-
-.mbf-button {
-	display: inline-block;
-	padding: 0.7rem 1.4rem;
-	border-radius: var(--mbf-radius);
-	text-decoration: none;
-	font-weight: 600;
-}
-
-.mbf-button--primary {
-	background: var(--mbf-turquoise);
-	color: #fff;
 }
 
 .mbf-categories {
@@ -215,6 +170,10 @@
 	text-align: center;
 }
 
+.mbf-benefits__icon {
+	margin: 0 auto 0.5rem;
+}
+
 .mbf-benefits__item h2 {
 	font-size: 0.95rem;
 	margin: 0 0 0.25rem;
@@ -224,32 +183,6 @@
 	font-size: 0.8rem;
 	color: var(--mbf-muted);
 	margin: 0;
-}
-
-.mbf-newsletter {
-	background: var(--mbf-dark);
-	color: #fff;
-	padding: var(--mbf-gap-lg) 0;
-	text-align: center;
-}
-
-.mbf-newsletter__form {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	max-width: 420px;
-	margin: var(--mbf-gap-sm) auto 0;
-}
-
-.mbf-newsletter__form input[type="email"] {
-	padding: 0.7rem;
-	border-radius: var(--mbf-radius);
-	border: 0;
-}
-
-.mbf-newsletter__notice {
-	margin-top: 0.75rem;
-	font-size: 0.85rem;
 }
 
 @media (min-width: 768px) {
@@ -269,13 +202,6 @@
 		grid-template-columns: repeat(4, 1fr);
 	}
 
-	.mbf-newsletter__form {
-		flex-direction: row;
-	}
-
-	.mbf-newsletter__form input[type="email"] {
-		flex: 1;
-	}
 }
 
 @media (min-width: 1024px) {

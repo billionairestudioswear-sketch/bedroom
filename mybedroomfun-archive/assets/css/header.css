@@ -51,6 +51,12 @@
 	font-size: 1.25rem;
 	font-weight: 700;
 	text-decoration: none;
+	display: block;
+}
+
+.mbf-header__logo-fallback {
+	height: 43px;
+	width: auto;
 }
 
 .mbf-header__search {

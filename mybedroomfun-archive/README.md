@@ -39,8 +39,10 @@ mybedroomfun-archive/
 │   └── content-product.php   Restyled product card; all core WC hooks preserved
 ├── assets/
 │   ├── css/                  One stylesheet per concern, loaded only where needed
-│   └── js/
-│       └── navigation.js     Mega menu toggle — the only custom script
+│   ├── js/
+│   │   └── navigation.js     Mega menu toggle — the only custom script
+│   ├── fonts/                Self-hosted Lato (2 weights, Latin subset)
+│   └── images/recovered/     Real logo/hero/icon files recovered from the archive
 ├── screenshot.png
 ├── ASSET-INVENTORY.md         Archived-asset decisions + what to supply before launch
 └── DEPLOYMENT.md              Install / rollback steps for the staging site
@@ -48,14 +50,33 @@ mybedroomfun-archive/
 
 ## Homepage section order
 
-Hero → Browse Our Categories → Our Bestsellers → Latest on Sale →
-Weekly Featured Products → New Arrivals → promotional category
-banners → SEO content block (contains the page's **only** `<h1>`,
-*"Sex Toys & Intimate Wellness Products"*) → benefits strip →
-newsletter signup. Global chrome (announcement bar, utility links,
+Image-only hero → "Browse our categories" → "Our BestSellers" →
+"Latest on Sale" → "Weekly Featured Products" → New Arrivals →
+promotional category banners → SEO content block (contains the page's
+**only** `<h1>`, *"Sex Toys & Intimate Wellness Products"*) → benefits
+strip. This order and the exact section-heading casing/wording is
+recovered from the archive, not invented — see
+`ASSET-INVENTORY.md`.
+
+The newsletter signup is **not** a homepage section — the archive
+placed it as the 4th column of the footer, so it lives in
+`footer.php` alongside About the Store and the two "Information" link
+columns. Global chrome (announcement bar, utility links,
 search-centered header, shipping message, account/wishlist/cart
-controls, dark nav + Shopping Categories mega menu) is in
-`header.php`; the multi-column footer is in `footer.php`.
+controls, dark nav + "Shopping Categories" mega menu) is in
+`header.php`.
+
+## Recovered vs. original (what actually matches the archive)
+
+| Element | Status |
+|---|---|
+| Turquoise `#23c2be`, accent `#ff3c9c`, typeface Lato | **Recovered** — exact values read from the site's own compiled CSS |
+| Section headings, mega-menu label, primary nav ("Home"/"Shop") | **Recovered** — exact text from the saved HTML |
+| Logo, 1 hero image, 4 benefit-strip icons | **Recovered files** — see `ASSET-INVENTORY.md` |
+| Announcement bar / shipping-message / benefits-strip *wording with numbers* ("$60+", "14 days", "24/7") | **Recovered but not used as defaults** — this is 2023 policy data that can't be verified as still current (see "Use current verified policies" in the build brief). The literal recovered strings are: announcement — *"100% Discreet & Private Adult Sex Toy Shipping"*; shipping strip — *"FREE Shipping Over $60+ • Discreet Shipping & Billing"*; benefits — *"Free delivery for $60+", "Free returns within 14 days", "We are available 24/7", "100% Secure payments"*; footer about — *"MyBedroomFun is your number one all-inclusive sex toy retailer..."*. If the client confirms any of these are still accurate, paste them into the matching Customizer field (table below) — the theme ships with neutral placeholders instead. |
+| Promotional category banners | **Not recreated as named** — the archive linked to 3 specific Nov 2023 categories ("Best Selling Lubes", "Crotchless Lingerie", "Jeweled Butt Plugs"). Recreating those by name would mean recreating old taxonomy, which the brief explicitly prohibits. This build auto-populates 2 banners from the *current* catalog's top categories by product count instead (`mbf_get_top_categories_by_count()`), and a manually set Customizer banner always wins over the auto one. |
+| Container max-width `1200px` | **Not confirmed from this snapshot** — Flatsome's documented default, used because the site's actual computed value lives in a dynamic stylesheet the page save didn't capture. |
+| Flatsome's icon font (account/wishlist/cart/mega-menu icons) | **Deliberately not reused** — proprietary to the paid Flatsome theme, excluded by the brief. Text labels substitute. |
 
 ## Dynamic data — how it stays cheap
 
@@ -113,10 +134,13 @@ without theme changes.
   `loading="lazy"` everywhere except the single homepage hero image,
   which is instead preloaded (`fetchpriority="high"`, no `lazy`) as the
   LCP candidate.
-- System font stack only (`-apple-system, "Segoe UI", Roboto, ...`) —
-  no webfont download, no external font/icon library requests.
-- All icon-like elements (sale badge, benefit strip, mega-menu caret)
-  are CSS shapes/text, not an icon font or SVG sprite library.
+- Lato (the recovered typeface) is self-hosted as 2 woff2 files
+  (~46KB total, Latin subset only) with `font-display: swap` and a
+  system-font fallback stack — no runtime request to Google Fonts or
+  any other external host.
+- The sale badge and mega-menu caret are CSS shapes/text, not an icon
+  font or SVG sprite library. The 4 benefits-strip icons are small
+  (~1-2.6KB each) recovered PNGs, `loading="lazy"`, not an icon font.
 
 ## Customizer theme mods
 
@@ -135,8 +159,14 @@ copy, so it works out of the box before anyone configures them.
 
 ## Menus to assign after activation
 
-`Appearance → Menus`: **Primary Navigation**, **Utility Links**,
-**Footer Column 1/2/3**. None are required for the theme to render —
+`Appearance → Menus`: **Primary Navigation** (archive: "Home", "Shop"),
+**Utility Links** (archive: "About Us", "Contact Us", "FAQ",
+"Services"), **Footer Information Column 1** (archive: "About Us",
+"FAQ", "Contact Us", "Klarna FAQ"), **Footer Information Column 2**
+(archive: "Services", "Order Tracking", "Exclusive Brands"). Verify
+each destination page actually exists on production before linking to
+it — this environment can't check that. None of these menus are
+required for the theme to render —
 each `wp_nav_menu()` call is wrapped in `has_nav_menu()` / falls back
 to nothing rather than WordPress's default "Pages" fallback list.
 

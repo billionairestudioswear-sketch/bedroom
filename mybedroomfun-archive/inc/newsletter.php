@@ -1,6 +1,6 @@
 <?php
 /**
- * Minimal newsletter signup handler for the homepage form.
+ * Minimal newsletter signup handler for the footer newsletter form.
  *
  * This does not send email itself — it verifies the request, stores
  * nothing beyond what `mbf_newsletter_signup` subscribers choose to do,
@@ -37,7 +37,7 @@ function mbf_handle_newsletter_signup() {
 	}
 
 	/**
-	 * Fires with a validated email address from the homepage newsletter
+	 * Fires with a validated email address from the footer newsletter
 	 * form. Hook this to send it to a real email service provider.
 	 *
 	 * @param string $email Subscriber email address.
@@ -54,7 +54,7 @@ add_action( 'admin_post_nopriv_mbf_newsletter_signup', 'mbf_handle_newsletter_si
  * Show a small inline confirmation/error message after redirect back.
  */
 function mbf_newsletter_notice() {
-	if ( ! is_front_page() || empty( $_GET['mbf_newsletter'] ) ) {
+	if ( empty( $_GET['mbf_newsletter'] ) ) {
 		return;
 	}
 

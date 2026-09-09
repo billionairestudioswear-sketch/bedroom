@@ -18,8 +18,15 @@ Text Domain: mybedroomfun-archive
    other stylesheet in assets/css/ reads these custom properties.
    ------------------------------------------------------------------ */
 :root {
-	--mbf-turquoise: #17a3a3;
-	--mbf-turquoise-dark: #0f7f7f;
+	/* #23c2be and #ff3c9c are recovered exact values -- read from the
+	   site's own compiled CSS in the Nov 2023 archive snapshot
+	   (.header-top{background-color:#23c2be!important} and the
+	   sitewide --primary-color custom property). Everything else in
+	   this token set (dark nav, surfaces, sale/success) could not be
+	   recovered from the snapshot and is an original choice designed
+	   to complement the two recovered colors. */
+	--mbf-turquoise: #23c2be;
+	--mbf-turquoise-dark: #1a9490;
 	--mbf-dark: #1c1e21;
 	--mbf-dark-soft: #2a2d31;
 	--mbf-ink: #202124;
@@ -27,11 +34,14 @@ Text Domain: mybedroomfun-archive
 	--mbf-border: #e2e5e8;
 	--mbf-surface: #ffffff;
 	--mbf-surface-alt: #f6f7f8;
-	--mbf-accent: #d1477a;
+	--mbf-accent: #ff3c9c;
 	--mbf-sale: #c0392b;
 	--mbf-success: #1e8e5a;
 
-	--mbf-font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	/* Lato is the recovered body/nav typeface (self-hosted below --
+	   Latin subset only, two weights, ~46KB total). System-font
+	   fallback stack covers the rest. */
+	--mbf-font-base: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	--mbf-font-heading: var(--mbf-font-base);
 
 	--mbf-radius: 6px;
@@ -39,9 +49,28 @@ Text Domain: mybedroomfun-archive
 	--mbf-gap-sm: 1rem;
 	--mbf-gap-md: 1.5rem;
 	--mbf-gap-lg: 2.5rem;
-	--mbf-container: 1280px;
+	/* 1200px is Flatsome's documented default container width; the
+	   exact value could not be recovered from this snapshot (it lives
+	   in a per-site dynamic stylesheet the saved page didn't capture). */
+	--mbf-container: 1200px;
 
 	--mbf-header-h: 72px;
+}
+
+@font-face {
+	font-family: "Lato";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("assets/fonts/lato-400.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Lato";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("assets/fonts/lato-700.woff2") format("woff2");
 }
 
 /* ------------------------------------------------------------------
@@ -125,4 +154,20 @@ a {
 
 .mbf-skip-link:focus {
 	left: 0;
+}
+
+/* Generic button used sitewide (404 page, footer newsletter, hero
+   link) -- kept in the always-loaded stylesheet rather than a
+   conditionally-enqueued one, on purpose. */
+.mbf-button {
+	display: inline-block;
+	padding: 0.7rem 1.4rem;
+	border-radius: var(--mbf-radius);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.mbf-button--primary {
+	background: var(--mbf-turquoise);
+	color: #fff;
 }

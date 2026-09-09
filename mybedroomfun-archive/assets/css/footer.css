@@ -39,6 +39,24 @@
 	font-size: 0.85rem;
 }
 
+.mbf-newsletter__form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: var(--mbf-gap-xs);
+}
+
+.mbf-newsletter__form input[type="email"] {
+	padding: 0.6rem;
+	border-radius: var(--mbf-radius);
+	border: 0;
+}
+
+.mbf-newsletter__notice {
+	margin-top: 0.5rem;
+	font-size: 0.8rem;
+}
+
 .mbf-footer__bottom {
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 	padding: var(--mbf-gap-sm);

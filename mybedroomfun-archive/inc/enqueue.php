@@ -69,7 +69,10 @@ function mbf_preload_hero_image() {
 		return;
 	}
 
-	$hero_image = get_theme_mod( 'mbf_hero_image' );
+	$hero_image = get_theme_mod(
+		'mbf_hero_image',
+		MBF_THEME_URI . '/assets/images/recovered/hero-banner-1.jpg'
+	);
 	if ( ! $hero_image ) {
 		return;
 	}

@@ -28,66 +28,107 @@ get_header();
 	<?php
 	/**
 	 * The archived homepage hero was an image-only rotating banner (5
-	 * slides) with no headline/subhead/CTA text at all -- so this is a
-	 * single full-width image, not the text-over-image hero this theme
-	 * shipped with before. Only 1 of the 5 archived slide images
-	 * survived in the reference snapshot (the rest were lazy-loaded and
-	 * never saved); it's bundled as the default. See ASSET-INVENTORY.md.
-	 * Building a real multi-slide rotation is left for when the
-	 * remaining slide images are supplied -- one static image is
-	 * honest about what's actually recoverable right now.
+	 * slides), no headline/subhead/CTA text. Slide 1 defaults to the
+	 * one recovered archive image (see ASSET-INVENTORY.md); slides 2-5
+	 * are configured via Appearance > Customize > Homepage Hero Slider
+	 * and simply don't exist in the markup until an image is set for
+	 * them (mbf_get_hero_slides() omits unset slots entirely). With
+	 * only 1 slide, this renders as a single static image and no
+	 * slider JS/controls are enqueued at all -- see inc/enqueue.php.
 	 */
-	$mbf_hero_image = get_theme_mod(
-		'mbf_hero_image',
-		MBF_THEME_URI . '/assets/images/recovered/hero-banner-1.jpg'
-	);
+	$mbf_hero_slides = function_exists( 'mbf_get_hero_slides' ) ? mbf_get_hero_slides() : array();
+	$mbf_hero_count  = count( $mbf_hero_slides );
 	?>
-	<section class="mbf-hero">
-		<?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
-			<a class="mbf-hero__link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
-		<?php endif; ?>
-				<img
-					class="mbf-hero__image"
-					src="<?php echo esc_url( $mbf_hero_image ); ?>"
-					alt=""
-					width="2000"
-					height="938"
-					fetchpriority="high"
-					decoding="async"
-				/>
-		<?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
-			</a>
-		<?php endif; ?>
-	</section>
-
-	<?php if ( function_exists( 'mbf_get_shopping_categories' ) ) : ?>
-		<?php $mbf_categories = mbf_get_shopping_categories( 8 ); ?>
-		<?php if ( ! empty( $mbf_categories ) ) : ?>
-			<section class="mbf-categories">
-				<div class="mbf-container">
-					<h2 class="mbf-categories__heading"><?php esc_html_e( 'Browse our categories', 'mybedroomfun-archive' ); ?></h2>
-					<ul class="mbf-categories__grid">
-						<?php foreach ( $mbf_categories as $mbf_category_row ) : ?>
-							<?php
-							$mbf_term         = $mbf_category_row['term'];
-							$mbf_thumbnail_id = get_term_meta( $mbf_term->term_id, 'thumbnail_id', true );
-							?>
-							<li class="mbf-categories__item">
-								<a href="<?php echo esc_url( get_term_link( $mbf_term ) ); ?>">
-									<?php if ( $mbf_thumbnail_id ) : ?>
-										<?php echo wp_get_attachment_image( $mbf_thumbnail_id, 'mbf-card', false, array( 'loading' => 'lazy', 'alt' => $mbf_term->name ) ); ?>
+	<?php if ( $mbf_hero_count > 0 ) : ?>
+		<section class="mbf-hero"<?php echo ( $mbf_hero_count > 1 ) ? ' data-mbf-hero' : ''; ?>>
+			<div class="mbf-hero__viewport">
+				<?php foreach ( $mbf_hero_slides as $mbf_index => $mbf_slide_src ) : ?>
+					<?php $mbf_is_first = ( 0 === $mbf_index ); ?>
+					<div
+						class="mbf-hero__slide<?php echo $mbf_is_first ? ' is-active' : ''; ?>"
+						<?php echo $mbf_is_first ? '' : 'aria-hidden="true"'; ?>
+					>
+						<?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
+							<a class="mbf-hero__link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" <?php echo $mbf_is_first ? '' : 'tabindex="-1"'; ?>>
+						<?php endif; ?>
+								<img
+									class="mbf-hero__image"
+									src="<?php echo esc_url( $mbf_slide_src ); ?>"
+									alt=""
+									<?php if ( $mbf_is_first ) : ?>
+										width="2000"
+										height="938"
+										fetchpriority="high"
 									<?php else : ?>
-										<span class="mbf-categories__placeholder" aria-hidden="true"></span>
+										loading="lazy"
 									<?php endif; ?>
-									<span class="mbf-categories__name"><?php echo esc_html( $mbf_term->name ); ?></span>
-								</a>
-							</li>
-						<?php endforeach; ?>
-					</ul>
+									decoding="async"
+								/>
+						<?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
+							</a>
+						<?php endif; ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<?php if ( $mbf_hero_count > 1 ) : ?>
+				<button type="button" class="mbf-hero__control mbf-hero__control--prev" data-hero-prev>
+					<span class="screen-reader-text"><?php esc_html_e( 'Previous slide', 'mybedroomfun-archive' ); ?></span>
+				</button>
+				<button type="button" class="mbf-hero__control mbf-hero__control--next" data-hero-next>
+					<span class="screen-reader-text"><?php esc_html_e( 'Next slide', 'mybedroomfun-archive' ); ?></span>
+				</button>
+				<div class="mbf-hero__dots" data-hero-dots>
+					<?php foreach ( $mbf_hero_slides as $mbf_index => $mbf_slide_src ) : ?>
+						<button
+							type="button"
+							class="mbf-hero__dot<?php echo ( 0 === $mbf_index ) ? ' is-active' : ''; ?>"
+							data-hero-dot="<?php echo esc_attr( $mbf_index ); ?>"
+							<?php echo ( 0 === $mbf_index ) ? 'aria-current="true"' : ''; ?>
+						>
+							<span class="screen-reader-text">
+								<?php
+								printf(
+									/* translators: %d: slide number */
+									esc_html__( 'Show slide %d', 'mybedroomfun-archive' ),
+									absint( $mbf_index ) + 1
+								);
+								?>
+							</span>
+						</button>
+					<?php endforeach; ?>
 				</div>
-			</section>
-		<?php endif; ?>
+			<?php endif; ?>
+		</section>
 	<?php endif; ?>
+
+	<section class="mbf-categories">
+		<div class="mbf-container">
+			<h2 class="mbf-categories__heading"><?php esc_html_e( 'Browse our categories', 'mybedroomfun-archive' ); ?></h2>
+			<?php $mbf_categories = function_exists( 'mbf_get_shopping_categories' ) ? mbf_get_shopping_categories( 8 ) : array(); ?>
+			<?php if ( empty( $mbf_categories ) ) : ?>
+				<p class="mbf-categories__empty"><?php esc_html_e( 'No product categories to show here yet.', 'mybedroomfun-archive' ); ?></p>
+			<?php else : ?>
+				<ul class="mbf-categories__grid">
+					<?php foreach ( $mbf_categories as $mbf_category_row ) : ?>
+						<?php
+						$mbf_term         = $mbf_category_row['term'];
+						$mbf_thumbnail_id = get_term_meta( $mbf_term->term_id, 'thumbnail_id', true );
+						?>
+						<li class="mbf-categories__item">
+							<a href="<?php echo esc_url( get_term_link( $mbf_term ) ); ?>">
+								<?php if ( $mbf_thumbnail_id ) : ?>
+									<?php echo wp_get_attachment_image( $mbf_thumbnail_id, 'mbf-card', false, array( 'loading' => 'lazy', 'alt' => $mbf_term->name ) ); ?>
+								<?php else : ?>
+									<span class="mbf-categories__placeholder" aria-hidden="true"></span>
+								<?php endif; ?>
+								<span class="mbf-categories__name"><?php echo esc_html( $mbf_term->name ); ?></span>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+	</section>
 
 	<?php if ( function_exists( 'mbf_render_product_rail' ) ) : ?>
 		<?php mbf_render_product_rail( __( 'Our BestSellers', 'mybedroomfun-archive' ), mbf_get_bestseller_ids() ); ?>

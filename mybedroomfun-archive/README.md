@@ -146,11 +146,21 @@ without theme changes.
 
 ## Customizer
 
+**Homepage Hero Slider** (`Appearance → Customize → Homepage Hero
+Slider`) — 5 image slots. Slide 1 defaults to the recovered archive
+image; slides 2-5 default to empty and are omitted from the page
+entirely (not hidden-but-present) until an image is set. With only 1
+slide configured, the hero renders as a static image with no
+slider JS/controls at all — see `mbf_get_hero_slides()` in
+`inc/template-tags.php` and the conditional enqueue in
+`inc/enqueue.php`.
+
 **Promotional Banners** (`Appearance → Customize → Promotional
 Banners`) has a real, registered UI — see `inc/customizer.php`: 3
 slots, each a dropdown of the site's existing product categories
 ("— None —" hides that slot; there's no free-text URL field) plus an
-image upload. An unset slot is simply not shown; nothing is
+image upload. A slot needs **both** a category and an image to render
+— there's no fallback to the category's own thumbnail. Nothing is
 auto-selected.
 
 A few other pieces of copy are theme mods with a safe fallback default

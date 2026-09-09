@@ -128,6 +128,34 @@ function mbf_get_new_arrival_ids( $limit = 8 ) {
 }
 
 /**
+ * Configured hero slider images, slide 1 through 5, in order. Slide 1
+ * always has a value (the recovered archive image, unless overridden
+ * via Customizer); slides 2-5 are simply omitted from the returned
+ * array -- not included as an empty/placeholder entry -- when no
+ * image has been set for them, so the template never has to render
+ * (and then hide) an empty slot.
+ *
+ * @return string[] Image URLs, in slide order.
+ */
+function mbf_get_hero_slides() {
+	$slides = array();
+
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$mod   = ( 1 === $i ) ? 'mbf_hero_image' : "mbf_hero_slide_{$i}_image";
+		$image = get_theme_mod(
+			$mod,
+			( 1 === $i ) ? ( defined( 'MBF_THEME_URI' ) ? MBF_THEME_URI . '/assets/images/recovered/hero-banner-1.jpg' : '' ) : ''
+		);
+
+		if ( $image ) {
+			$slides[] = $image;
+		}
+	}
+
+	return $slides;
+}
+
+/**
  * Top-level product categories plus their direct children, for the
  * mega menu and the "Browse Our Categories" homepage grid. Reads
  * existing product_cat terms only.
@@ -261,24 +289,27 @@ function mbf_render_product_card( $product_id ) {
 
 /**
  * Output a homepage product rail (a heading plus a row of cards) for a
- * list of product IDs. No-ops quietly if there is nothing to show yet.
+ * list of product IDs. Still renders the heading and an honest empty
+ * state (no dummy/placeholder products) when the list is empty, so
+ * the section's presence doesn't silently depend on catalog data.
  *
  * @param string $heading     Section heading text.
  * @param int[]  $product_ids Product IDs to render.
  */
 function mbf_render_product_rail( $heading, array $product_ids ) {
-	if ( empty( $product_ids ) ) {
-		return;
-	}
 	?>
 	<section class="mbf-rail">
 		<div class="mbf-container">
 			<h2 class="mbf-rail__heading"><?php echo esc_html( $heading ); ?></h2>
-			<ul class="mbf-rail__grid">
-				<?php foreach ( $product_ids as $product_id ) : ?>
-					<?php mbf_render_product_card( $product_id ); ?>
-				<?php endforeach; ?>
-			</ul>
+			<?php if ( empty( $product_ids ) ) : ?>
+				<p class="mbf-rail__empty"><?php esc_html_e( 'No products to show here yet.', 'mybedroomfun-archive' ); ?></p>
+			<?php else : ?>
+				<ul class="mbf-rail__grid">
+					<?php foreach ( $product_ids as $product_id ) : ?>
+						<?php mbf_render_product_card( $product_id ); ?>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 	</section>
 	<?php

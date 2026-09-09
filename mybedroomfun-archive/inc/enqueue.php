@@ -45,10 +45,18 @@ function mbf_enqueue_assets() {
 
 	wp_enqueue_script( 'mbf-navigation', MBF_THEME_URI . '/assets/js/navigation.js', array(), mbf_asset_version( '/assets/js/navigation.js' ), true );
 
-	// Homepage only. No dedicated JS: rails and category grid are pure
-	// CSS + native lazy-loaded <img>, nothing to enhance with script.
+	// Homepage only. Rails and category grid are pure CSS + native
+	// lazy-loaded <img>, nothing to enhance with script. The hero
+	// slider script is the one exception, and only when there's
+	// actually something to slide between.
 	if ( is_front_page() && ! is_paged() ) {
 		wp_enqueue_style( 'mbf-homepage', MBF_THEME_URI . '/assets/css/homepage.css', array( 'mbf-style' ), mbf_asset_version( '/assets/css/homepage.css' ) );
+
+		$mbf_hero_slide_count = function_exists( 'mbf_get_hero_slides' ) ? count( mbf_get_hero_slides() ) : 0;
+
+		if ( $mbf_hero_slide_count > 1 ) {
+			wp_enqueue_script( 'mbf-hero-slider', MBF_THEME_URI . '/assets/js/hero-slider.js', array(), mbf_asset_version( '/assets/js/hero-slider.js' ), true );
+		}
 	}
 
 	// WooCommerce shop / category / tag archives.

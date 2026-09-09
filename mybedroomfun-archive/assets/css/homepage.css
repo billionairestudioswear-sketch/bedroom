@@ -3,21 +3,134 @@
    rendered outside the shop loop (search results reuse .mbf-rail__grid
    too, loaded via shop.css). */
 
-/* Image-only hero -- the archive had no text/CTA over this banner,
-   just a full-width rotating image (see front-page.php comment). */
+/* Image-only hero slider -- the archive had no text/CTA over these
+   banners, just full-width rotating images (see front-page.php
+   comment). The viewport's fixed aspect-ratio reserves the correct
+   space before any image loads (no layout shift), regardless of how
+   many slides are configured or what size an admin-uploaded slide
+   image actually is -- every slide is cropped to this same box via
+   object-fit: cover. */
 .mbf-hero {
 	background: var(--mbf-surface-alt);
-	line-height: 0;
+	position: relative;
+}
+
+.mbf-hero__viewport {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 2000 / 938;
+	overflow: hidden;
+}
+
+.mbf-hero__slide {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
+.mbf-hero__slide.is-active {
+	opacity: 1;
+	z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mbf-hero__slide {
+		transition: none;
+	}
 }
 
 .mbf-hero__link {
 	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .mbf-hero__image {
 	width: 100%;
-	height: auto;
+	height: 100%;
 	object-fit: cover;
+	display: block;
+}
+
+.mbf-hero__control {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 2;
+	width: 2.25rem;
+	height: 2.25rem;
+	border: 0;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.85);
+	color: var(--mbf-ink);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.mbf-hero__control:hover,
+.mbf-hero__control:focus-visible {
+	background: #fff;
+}
+
+.mbf-hero__control--prev {
+	left: var(--mbf-gap-sm);
+}
+
+.mbf-hero__control--next {
+	right: var(--mbf-gap-sm);
+}
+
+.mbf-hero__control::before {
+	content: "";
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-style: solid;
+	border-width: 0 2px 2px 0;
+	border-color: currentColor;
+}
+
+.mbf-hero__control--prev::before {
+	transform: rotate(135deg);
+	margin-left: 4px;
+}
+
+.mbf-hero__control--next::before {
+	transform: rotate(-45deg);
+	margin-right: 4px;
+}
+
+.mbf-hero__dots {
+	position: absolute;
+	bottom: var(--mbf-gap-sm);
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2;
+	display: flex;
+	gap: 0.5rem;
+}
+
+.mbf-hero__dot {
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 999px;
+	border: 0;
+	padding: 0;
+	background: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+}
+
+.mbf-hero__dot.is-active {
+	background: #fff;
+}
+
+.mbf-rail__empty,
+.mbf-categories__empty {
+	color: var(--mbf-muted);
+	font-size: 0.9rem;
 }
 
 .mbf-categories {

@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <aside id="secondary" class="mbf-shop-sidebar" aria-label="<?php esc_attr_e( 'Shop navigation', 'mybedroomfun-archive' ); ?>">
 
 	<?php if ( function_exists( 'mbf_get_shopping_categories' ) ) : ?>
-		<?php $mbf_sidebar_categories = mbf_get_shopping_categories(); ?>
+		<?php $mbf_sidebar_categories = mbf_get_shopping_categories( 40 ); ?>
 		<?php if ( ! empty( $mbf_sidebar_categories ) ) : ?>
-			<nav class="mbf-shop-sidebar__categories">
+			<nav class="mbf-shop-sidebar__categories mbf-shop-sidebar__categories--scroll">
 				<h2 class="mbf-widget__title"><?php esc_html_e( 'Categories', 'mybedroomfun-archive' ); ?></h2>
 				<ul>
 					<?php foreach ( $mbf_sidebar_categories as $mbf_row ) : ?>

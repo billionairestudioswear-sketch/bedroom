@@ -150,7 +150,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * message when they don't (WooCommerce inactive, or active
 			 * with no categories yet) -- never fabricated links.
 			 */
-			$mbf_categories = function_exists( 'mbf_get_shopping_categories' ) ? mbf_get_shopping_categories() : array();
+			// Capped so a catalog with a large, multilevel taxonomy (e.g.
+			// hundreds of top-level categories) can't blow up the mega
+			// menu into an unmanageable number of columns -- the panel
+			// itself also scroll-contains (see .mbf-mega__columns).
+			$mbf_categories = function_exists( 'mbf_get_shopping_categories' ) ? mbf_get_shopping_categories( 24 ) : array();
 			?>
 			<div class="mbf-mega">
 				<button
